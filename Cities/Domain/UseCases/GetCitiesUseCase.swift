@@ -18,6 +18,13 @@ final class GetCitiesUseCase: GetCitiesUseCaseContract, @unchecked Sendable {
     
     func getCities() async throws -> [City] {
         let result = try await dataSource.fetchCities()
-        return result
+        let sortedResults = result.sorted {
+            if $0.name == $1.name {
+                return $0.country < $1.country
+            } else {
+                return $0.name < $1.name
+            }
+        }
+        return sortedResults
     }
 }
