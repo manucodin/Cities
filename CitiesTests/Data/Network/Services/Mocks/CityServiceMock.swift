@@ -1,5 +1,5 @@
 //
-//  MockCityService.swift
+//  CityServiceMock.swift
 //  Cities
 //
 //  Created by Manuel Rodríguez Sebastián on 1/7/25.
@@ -9,8 +9,8 @@
 
 import Foundation
 
-public final class MockCityService: CityServiceProtocol {
-    private var result: Result<[CityDTO], Error>?
+public final class CityServiceMock: CityServiceProtocol {
+    public var result: Result<[CityDTO], Error>?
 
     public func fetchCities() async throws -> [CityDTO] {
         guard let result = result else {
