@@ -10,7 +10,6 @@ extension City {
         id: 1,
         name: "Gijón",
         country: "ES",
-        coordinates: .init(latitude: 43.53573, longitude: -5.66152),
-        isFavorite: false
+        coordinates: .init(latitude: 43.53573, longitude: -5.66152)
     )
 }

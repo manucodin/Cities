@@ -9,15 +9,21 @@ import Foundation
 import Combine
 
 final class CityListViewModel: ObservableObject {
-    @Published var cities: [City] = []
-    @Published var filteredCities: [City] = []
+    @Published var cities: [CityRenderModel] = []
+    @Published var filteredCities: [CityRenderModel] = []
     @Published var isLoading = true
     @Published var errorMessage: String?
     
     private let getCitiesUseCase: GetCitiesUseCaseContract
-
-    init(getCitiesUseCase: GetCitiesUseCaseContract = GetCitiesUseCase()) {
+    private let saveFavoriteCityUseCase: SaveFavoriteCityUseCaseContract
+    private let deleteFavoriteCityUseCase: DeleteFavoriteCityUseCaseContract
+    
+    init(getCitiesUseCase: GetCitiesUseCaseContract = GetCitiesUseCase(),
+         saveFavoriteCityUseCase: SaveFavoriteCityUseCaseContract = SaveFavoriteCityUseCase(),
+         deleteFavoriteCityUseCase: DeleteFavoriteCityUseCaseContract = DeleteFavoriteCityUseCase()) {
         self.getCitiesUseCase = getCitiesUseCase
+        self.saveFavoriteCityUseCase = saveFavoriteCityUseCase
+        self.deleteFavoriteCityUseCase = deleteFavoriteCityUseCase
     }
     
     @MainActor
@@ -47,6 +53,19 @@ final class CityListViewModel: ObservableObject {
             city.name.lowercased().hasPrefix(searchTerm)
         }
         filteredCities = result
+    }
+    
+    @MainActor
+    func toggleFavorite(for city: CityRenderModel) async  {
+        guard let index = cities.firstIndex(where: { $0.id == city.id }) else { return }
+        
+        do {
+            try await saveFavoriteCityUseCase.addFavorite(city.id)
+            cities[index].isFavorite.toggle()
+            filteredCities = cities
+        } catch (let error) {
+            errorMessage = "Error al actualizar la ciudad favorita: \(error.localizedDescription)"
+        }
     }
     
     private func handleError(_ error: Error) {

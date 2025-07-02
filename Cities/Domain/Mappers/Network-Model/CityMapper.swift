@@ -18,8 +18,7 @@ public class CityMapper {
             id: id,
             name: name,
             country: country,
-            coordinates: CLLocationCoordinate2D(latitude: latitude, longitude: longitude),
-            isFavorite: false
+            coordinates: CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         )
     }
 }
