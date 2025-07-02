@@ -24,6 +24,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A905B0032E1481A800EE6211 /* Cities.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cities.xctestplan; sourceTree = "<group>"; };
 		A97669062E147A7B00D735D2 /* Cities.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cities.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A97669182E147A7C00D735D2 /* CitiesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CitiesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A97669222E147A7C00D735D2 /* CitiesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CitiesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,6 +76,7 @@
 		A97668FD2E147A7B00D735D2 = {
 			isa = PBXGroup;
 			children = (
+				A905B0032E1481A800EE6211 /* Cities.xctestplan */,
 				A97669082E147A7B00D735D2 /* Cities */,
 				A976691B2E147A7C00D735D2 /* CitiesTests */,
 				A97669252E147A7C00D735D2 /* CitiesUITests */,
@@ -192,6 +194,7 @@
 			knownRegions = (
 				en,
 				Base,
+				es,
 			);
 			mainGroup = A97668FD2E147A7B00D735D2;
 			minimizedProjectReferenceProxies = 1;
@@ -328,6 +331,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
 			};
@@ -385,6 +389,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
 				VALIDATE_PRODUCT = YES;
 			};
