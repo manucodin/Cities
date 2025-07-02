@@ -5,14 +5,10 @@
 //  Created by Manuel Rodríguez Sebastián on 1/7/25.
 //
 
-protocol GetCitiesUseCaseContract: Sendable {
-    func getCities() async throws -> [City]
-}
-
 final class GetCitiesUseCase: GetCitiesUseCaseContract, @unchecked Sendable {
-    private let dataSource: CityDataSourceProtocol
+    private let dataSource: CityDataSourceContract
     
-    init(dataSource: CityDataSourceProtocol = CityDataSource()) {
+    init(dataSource: CityDataSourceContract = CityDataSource()) {
         self.dataSource = dataSource
     }
     

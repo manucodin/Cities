@@ -9,7 +9,7 @@
 
 import Foundation
 
-final class MockHTTPClient: HTTPClient {
+final class MockHTTPClient: HTTPClientContract {
     var result: Result<Data, Error>
     
     init(result: Result<Data, Error>) {

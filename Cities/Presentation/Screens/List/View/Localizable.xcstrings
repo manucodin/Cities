@@ -8,6 +8,12 @@
             "state" : "new",
             "value" : "%1$@, %2$@ %3$@"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$@ %3$@"
+          }
         }
       }
     },
@@ -28,10 +34,36 @@
       }
     },
     "Lat: %.2f" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lat: %.2f"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lat: %.2f"
+          }
+        }
+      }
     },
     "Lon: %.2f" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lon: %.2f"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lon: %.2f"
+          }
+        }
+      }
     },
     "progress_loading" : {
       "extractionState" : "manual",
@@ -46,6 +78,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cargando…"
+          }
+        }
+      }
+    },
+    "search_city_prompt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search city…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar ciudad…"
           }
         }
       }

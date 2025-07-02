@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CityListView: View {
+    @State private var searchText: String = ""
     @StateObject private var viewModel = CityListViewModel()
     
     var body: some View {
@@ -18,9 +19,7 @@ struct CityListView: View {
                 } else if let errorMessage = viewModel.errorMessage {
                     error(errorMessage)
                 } else {
-                    List(viewModel.cities, id: \.id) { city in
-                        CityRowView(city: city)
-                    }
+                    list
                 }
             }
             .navigationTitle("cities_title")
@@ -41,6 +40,21 @@ private extension CityListView {
     func error(_ errorMessage: String) -> some View {
         Text(errorMessage)
             .foregroundColor(.red)
+    }
+    
+    @ViewBuilder
+    var list: some View {
+        List(viewModel.filteredCities, id: \.id) { city in
+            CityRowView(city: city)
+        }
+        .searchable(
+            text: $searchText,
+            placement: .navigationBarDrawer(displayMode: .always),
+            prompt: "search_city_prompt"
+        )
+        .onChange(of: searchText) { searchText in
+            viewModel.searchCities(searchText)
+        }
     }
 }
 

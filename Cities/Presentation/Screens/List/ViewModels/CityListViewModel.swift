@@ -10,7 +10,8 @@ import Combine
 
 final class CityListViewModel: ObservableObject {
     @Published var cities: [City] = []
-    @Published var isLoading = false
+    @Published var filteredCities: [City] = []
+    @Published var isLoading = true
     @Published var errorMessage: String?
     
     private let getCitiesUseCase: GetCitiesUseCaseContract
@@ -29,9 +30,23 @@ final class CityListViewModel: ObservableObject {
         do {
             let result = try await getCitiesUseCase.getCities()
             cities = result
+            filteredCities = result
         } catch (let error){
             errorMessage = "Error al cargar ciudades: \(error.localizedDescription)"
         }
+    }
+    
+    func searchCities(_ value: String) {
+        guard value.isEmpty == false else {
+            filteredCities = cities
+            return
+        }
+        
+        let searchTerm = value.lowercased()
+        let result = cities.filter { city in
+            city.name.lowercased().hasPrefix(searchTerm)
+        }
+        filteredCities = result
     }
     
     private func handleError(_ error: Error) {

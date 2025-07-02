@@ -7,19 +7,11 @@
 
 import Foundation
 
-public protocol CityServiceProtocol {
-    func fetchCities() async throws -> [CityDTO]
-}
-
 public final class CityService: CityServiceProtocol {
-    private let httpClient: HTTPClient
+    private let httpClient: HTTPClientContract
     
-    init(httpClient: HTTPClient = URLSessionHTTPClient()) {
+    init(httpClient: HTTPClientContract = URLSessionClient()) {
         self.httpClient = httpClient
-    }
-    
-    public init() {
-        self.httpClient = URLSessionHTTPClient()
     }
     
     public func fetchCities() async throws -> [CityDTO] {

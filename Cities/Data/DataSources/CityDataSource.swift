@@ -5,7 +5,7 @@
 //  Created by Manuel Rodríguez Sebastián on 1/7/25.
 //
 
-public class CityDataSource: CityDataSourceProtocol {
+final class CityDataSource: CityDataSourceContract {
     private let service: CityServiceProtocol
     private let mapper = CityMapper()
     
@@ -13,7 +13,7 @@ public class CityDataSource: CityDataSourceProtocol {
         self.service = service
     }
     
-    public func fetchCities() async throws -> [City] {
+    func fetchCities() async throws -> [City] {
         return try await service.fetchCities().compactMap{ mapper.map($0) }
     }
 }
