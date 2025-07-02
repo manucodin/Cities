@@ -21,7 +21,7 @@ final class FavoritesDataSource: FavoritesDataSourceContract {
     }
     
     func deleteFavorite(_ id: Int) async throws {
-        try await repository.addFavorite(id)
+        try await repository.deleteFavorite(id)
     }
     
     func allFavoriteIDs() async throws -> Set<Int> {
