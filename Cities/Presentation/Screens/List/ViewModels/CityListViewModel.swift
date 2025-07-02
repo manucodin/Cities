@@ -10,6 +10,8 @@ import Combine
 
 final class CityListViewModel: ObservableObject {
     @Published var filteredCities: [CityRenderModel] = []
+    @Published var searchText: String = ""
+    @Published var filter: Filter = .all
     @Published var isLoading = true
     @Published var errorMessage: String?
     
@@ -44,15 +46,15 @@ final class CityListViewModel: ObservableObject {
     }
     
     @MainActor
-    func searchCities(_ value: String) async {
-        let searchTerm = value.lowercased()
+    func searchCities() async {
+        let searchTerm = searchText.lowercased()
         let source = cities
         let chunkSize = 1000
 
         let result = await withTaskGroup(of: (index: Int, result: [CityRenderModel]).self) { group in
             for (i, chunk) in source.chunked(into: chunkSize).enumerated() {
                 group.addTask {
-                    let filtered = value.isEmpty
+                    let filtered = searchTerm.isEmpty
                         ? chunk
                         : chunk.filter { $0.name.lowercased().hasPrefix(searchTerm) }
                     return (index: i, result: filtered)
@@ -74,7 +76,7 @@ final class CityListViewModel: ObservableObject {
     }
     
     @MainActor
-    func applyFilter(_ filter: Filter) async {
+    func applyFilter() async {
         switch filter {
         case .all:
             filteredCities = cities

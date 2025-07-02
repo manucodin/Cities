@@ -12,17 +12,21 @@ struct CityMapView: View {
     let city: CityRenderModel
     
     @State private var selectedCity: CityRenderModel?
+    @State private var cameraPosition: MapCameraPosition
     
-    var region: MKCoordinateRegion {
-        MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: city.coordinates.latitude, longitude: city.coordinates.longitude),
-            span: MKCoordinateSpan(latitudeDelta: 0.3, longitudeDelta: 0.3)
-        )
+    init(city: CityRenderModel, selectedCity: CityRenderModel? = nil) {
+        self.city = city
+        self.selectedCity = selectedCity
+        _cameraPosition = State(initialValue: MapCameraPosition.region(
+            MKCoordinateRegion(
+                center: city.coordinates,
+                span: MKCoordinateSpan(latitudeDelta: 0.3, longitudeDelta: 0.3))
+        ))
     }
     
     var body: some View {
-        Map(coordinateRegion: .constant(region), annotationItems: [AnnotationItem(coordinate: region.center)]) { item in
-            MapAnnotation(coordinate: city.coordinates) {
+        Map(position: $cameraPosition) {
+            Annotation(city.name, coordinate: city.coordinates) {
                 Button(action: {
                     selectedCity = city
                 }) {
@@ -36,17 +40,27 @@ struct CityMapView: View {
         }
         .ignoresSafeArea(edges: .bottom)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    withAnimation {
+                        cameraPosition = MapCameraPosition.region(
+                            MKCoordinateRegion(
+                                center: city.coordinates,
+                                span: MKCoordinateSpan(latitudeDelta: 0.3, longitudeDelta: 0.3))
+                        )
+                        selectedCity = city
+                    }
+                } label: {
+                    Image(systemName: "location.fill")
+                }
+            }
+        }
         .sheet(item: $selectedCity) { city in
             CityDetailView(city: city)
         }
     }
-    
-    struct AnnotationItem: Identifiable {
-        let id = UUID()
-        let coordinate: CLLocationCoordinate2D
-    }
 }
-
 
 #Preview {
     CityMapView(city: .dummy)

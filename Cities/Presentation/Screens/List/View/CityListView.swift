@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct CityListView: View {
-    @State private var searchText: String = ""
-    @State private var filter: Filter = .all
     @StateObject private var viewModel = CityListViewModel()
     
     var body: some View {
@@ -54,25 +52,26 @@ private extension CityListView {
                 }
             }
         }
+        .listStyle(.plain)
         .searchable(
-            text: $searchText,
+            text: $viewModel.searchText,
             placement: .navigationBarDrawer(displayMode: .always),
             prompt: "search_city_prompt"
         )
-        .onChange(of: searchText) { searchText in
-            Task { await viewModel.searchCities(searchText) }
+        .onChange(of: viewModel.searchText) {
+            Task { await viewModel.searchCities() }
         }
-        .onChange(of: filter) { filter in
-            Task { await viewModel.applyFilter(filter) }
+        .onChange(of: viewModel.filter) {
+            Task { await viewModel.applyFilter() }
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
                     ForEach(Filter.allCases) { option in
                         Button {
-                            filter = option
+                            viewModel.filter = option
                         } label: {
-                            Label(option.localizedValue, systemImage: filter == option ? "checkmark" : "")
+                            Label(option.localizedValue, systemImage: viewModel.filter == option ? "checkmark" : "")
                         }
                     }
                 } label: {
