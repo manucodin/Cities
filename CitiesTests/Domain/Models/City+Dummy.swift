@@ -11,7 +11,7 @@ import CoreLocation
 import Foundation
 
 extension City {
-    static func makeDummy(country: String, name: String, id: Int, coordinates: CLLocationCoordinate2D, isFavorite: Bool) -> City {
-        return .init(id: id, name: name, country: country, coordinates: coordinates, isFavorite: isFavorite)
+    static func makeDummy(country: String, name: String, id: Int, coordinates: CLLocationCoordinate2D) -> City {
+        return .init(id: id, name: name, country: country, coordinates: coordinates)
     }
 }

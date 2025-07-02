@@ -13,7 +13,7 @@ public final class CityServiceMock: CityServiceProtocol {
     public var result: Result<[CityDTO], Error>?
 
     public func fetchCities() async throws -> [CityDTO] {
-        guard let result = result else {
+        guard let result else {
             fatalError("No result provided")
         }
         

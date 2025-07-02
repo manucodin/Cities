@@ -16,7 +16,7 @@ final class CityDataSourceTests: XCTestCase {
     override func setUp() {
         super.setUp()
         serviceMock = CityServiceMock()
-        sut = CityDataSource(service: serviceMock)
+        sut = CityDataSource(cityService: serviceMock)
     }
     
     override func tearDown() {

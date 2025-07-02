@@ -7,7 +7,7 @@
 
 import CoreData
 
-struct PersistenceController {
+final class PersistenceController: Sendable {
     static let shared = PersistenceController()
     
     let container: NSPersistentContainer

@@ -28,7 +28,7 @@ final class CityListViewModelTests: XCTestCase {
     @MainActor
     func testFetchCities() async throws {
         // Given
-        let cities: [City] = [
+        let cities: [CityRenderModel] = [
             .makeDummy(country: "AU", name: "Sydney", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
             .makeDummy(country: "US", name: "Denver", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
             .makeDummy(country: "US", name: "Albuquerque", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
@@ -60,7 +60,7 @@ final class CityListViewModelTests: XCTestCase {
     
     func testFilterWithPrefixExpectedCities() {
         // Given
-        let cities: [City] = [
+        let cities: [CityRenderModel] = [
             .makeDummy(country: "US", name: "Alabama", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
             .makeDummy(country: "US", name: "Albuquerque", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
             .makeDummy(country: "AU", name: "Sydney", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
@@ -79,7 +79,7 @@ final class CityListViewModelTests: XCTestCase {
     
     func testFilterIsCaseInsensitive() {
         // Given
-        let cities: [City] = [
+        let cities: [CityRenderModel] = [
             .makeDummy(country: "AU", name: "Sydney", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
             .makeDummy(country: "ES", name: "santander", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
@@ -96,7 +96,7 @@ final class CityListViewModelTests: XCTestCase {
     
     func testFilterWithNoMatchesReturnsEmptyArray() {
         // Given
-        let cities: [City] = [
+        let cities: [CityRenderModel] = [
             .makeDummy(country: "ES", name: "Madrid", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
         sut.cities = cities
@@ -111,7 +111,7 @@ final class CityListViewModelTests: XCTestCase {
     
     func testFilterSortOrderCityThenCountry() {
         // Given
-        let cities: [City] = [
+        let cities: [CityRenderModel] = [
             .makeDummy(country: "NL", name: "Amsterdam", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
             .makeDummy(country: "FR", name: "Paris", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
             .makeDummy(country: "US", name: "Paris", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
