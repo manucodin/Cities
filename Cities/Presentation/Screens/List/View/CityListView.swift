@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CityListView: View {
     @State private var searchText: String = ""
+    @State private var filter: Filter = .all
     @StateObject private var viewModel = CityListViewModel()
     
     var body: some View {
@@ -57,7 +58,25 @@ private extension CityListView {
             prompt: "search_city_prompt"
         )
         .onChange(of: searchText) { searchText in
-            viewModel.searchCities(searchText)
+            Task { await viewModel.searchCities(searchText) }
+        }
+        .onChange(of: filter) { filter in
+            Task { await viewModel.applyFilter(filter) }
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    ForEach(Filter.allCases) { option in
+                        Button {
+                            filter = option
+                        } label: {
+                            Label(option.localizedValue, systemImage: filter == option ? "checkmark" : "")
+                        }
+                    }
+                } label: {
+                    Label("filter_button", systemImage: "line.3.horizontal.decrease.circle")
+                }
+            }
         }
     }
 }
