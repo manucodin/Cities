@@ -15,7 +15,7 @@ struct CityDetailView: View {
     var body: some View {
         if #available(iOS 16.0, *) {
             contentView
-                .presentationDetents([.fraction(0.4), .medium, .large])
+                .presentationDetents([.height(250)])
                 .presentationDragIndicator(.visible)
         } else {
             contentView
@@ -29,7 +29,6 @@ private extension CityDetailView {
         VStack(alignment: .leading, spacing: 16) {
             header
             infoView
-            Spacer()
             button
         }
         .padding()
@@ -37,23 +36,15 @@ private extension CityDetailView {
     
     @ViewBuilder
     var header: some View {
-        HStack {
-            Text(city.name)
-                .font(.title2)
-                .fontWeight(.semibold)
-            
-            Spacer()
-            
-            Text(city.countryFlag)
-                .font(.largeTitle)
-        }
+        Text(city.name)
+            .font(.title2)
+            .fontWeight(.semibold)
     }
     
     @ViewBuilder
     var infoView: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Country: \(city.country)")
-            Text("Flag: \(city.countryFlag)")
+            Text("Country: \(city.country) \(city.countryFlag)")
             Text("Latitude: \(city.coordinates.latitude, specifier: "%.4f")")
             Text("Longitude: \(city.coordinates.longitude, specifier: "%.4f")")
         }
