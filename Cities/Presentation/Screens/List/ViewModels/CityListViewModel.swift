@@ -60,7 +60,12 @@ final class CityListViewModel: ObservableObject {
         guard let index = cities.firstIndex(where: { $0.id == city.id }) else { return }
         
         do {
-            try await saveFavoriteCityUseCase.addFavorite(city.id)
+            if city.isFavorite {
+                try await deleteFavoriteCityUseCase.deleteFavorite(city.id)
+            } else {
+                try await saveFavoriteCityUseCase.addFavorite(city.id)
+            }
+            
             cities[index].isFavorite.toggle()
             filteredCities = cities
         } catch (let error) {
