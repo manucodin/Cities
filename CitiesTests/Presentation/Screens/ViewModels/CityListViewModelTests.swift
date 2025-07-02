@@ -76,10 +76,11 @@ final class CityListViewModelTests: XCTestCase {
             .makeDummy(country: "US", name: "Arizona", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
         getCitiesUseCaseMock.result = .success(cities)
+        sut.searchText = "Al"
         
         // When
         await sut.fetchCities()
-        await sut.searchCities("Al")
+        await sut.searchCities()
         
         // Then
         XCTAssertFalse(sut.filteredCities.isEmpty)
@@ -94,11 +95,11 @@ final class CityListViewModelTests: XCTestCase {
             .makeDummy(country: "ES", name: "santander", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
         getCitiesUseCaseMock.result = .success(cities)
-
+        sut.searchText = "S"
         
         // When
         await sut.fetchCities()
-        await sut.searchCities("S")
+        await sut.searchCities()
         
         // Then
         XCTAssertFalse(sut.filteredCities.isEmpty)
@@ -112,10 +113,11 @@ final class CityListViewModelTests: XCTestCase {
             .makeDummy(country: "ES", name: "Madrid", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
         getCitiesUseCaseMock.result = .success(cities)
+        sut.searchText = "X"
         
         // When
         await sut.fetchCities()
-        await sut.searchCities("X")
+        await sut.searchCities()
 
         // Then
         XCTAssertTrue(sut.filteredCities.isEmpty)
@@ -130,11 +132,11 @@ final class CityListViewModelTests: XCTestCase {
             .makeDummy(country: "US", name: "Paris", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
         getCitiesUseCaseMock.result = .success(cities)
-
+        sut.searchText = ""
         
         // When
         await sut.fetchCities()
-        await sut.searchCities("")
+        await sut.searchCities()
         
         // Then
         XCTAssertFalse(sut.filteredCities.isEmpty)
@@ -226,10 +228,11 @@ final class CityListViewModelTests: XCTestCase {
             .makeDummy(country: "US", name: "Paris", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
         getCitiesUseCaseMock.result = .success(cities)
+        sut.filter = .all
         
         // When
         await sut.fetchCities()
-        await sut.applyFilter(.all)
+        await sut.applyFilter()
         
         XCTAssertFalse(sut.filteredCities.isEmpty)
         XCTAssertEqual(sut.filteredCities.count, cities.count)
@@ -244,10 +247,11 @@ final class CityListViewModelTests: XCTestCase {
             .makeDummy(country: "US", name: "Paris", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
         getCitiesUseCaseMock.result = .success(cities)
+        sut.filter = .favorites
         
         // When
         await sut.fetchCities()
-        await sut.applyFilter(.favorites)
+        await sut.applyFilter()
         
         XCTAssertFalse(sut.filteredCities.isEmpty)
         XCTAssertEqual(sut.filteredCities.count, 1)

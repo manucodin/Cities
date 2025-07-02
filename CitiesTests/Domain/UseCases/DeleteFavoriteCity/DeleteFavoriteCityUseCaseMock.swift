@@ -16,7 +16,7 @@ final class DeleteFavoriteCityUseCaseMock: DeleteFavoriteCityUseCaseContract, @u
         }
         
         switch result {
-        case .success(let cities): ()
+        case .success: ()
         case .failure(let error): throw error
         }
     }
