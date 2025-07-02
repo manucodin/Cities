@@ -33,6 +33,33 @@
         }
       }
     },
+    "Country: %@" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Country: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "País: %@"
+          }
+        }
+      }
+    },
+    "Country: %@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Country: %1$@ %2$@"
+          }
+        }
+      }
+    },
     "filte_favorites" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -83,6 +110,23 @@
         }
       }
     },
+    "Flag: %@" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flag: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bandera: %@"
+          }
+        }
+      }
+    },
     "Lat: %.2f" : {
       "localizations" : {
         "en" : {
@@ -99,6 +143,22 @@
         }
       }
     },
+    "Latitude: %.4f" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latitude: %.4f"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latitud: %.4f"
+          }
+        }
+      }
+    },
     "Lon: %.2f" : {
       "localizations" : {
         "en" : {
@@ -111,6 +171,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lon: %.2f"
+          }
+        }
+      }
+    },
+    "Longitude: %.4f" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longitude: %.4f"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longitud: %.4f"
+          }
+        }
+      }
+    },
+    "Open map" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open map"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar mapa"
           }
         }
       }
