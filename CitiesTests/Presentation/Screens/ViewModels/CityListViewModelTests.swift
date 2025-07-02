@@ -47,8 +47,8 @@ final class CityListViewModelTests: XCTestCase {
         await sut.fetchCities()
         
         // Then
-        XCTAssertFalse(sut.cities.isEmpty)
-        XCTAssertEqual(sut.cities.count, cities.count)
+        XCTAssertFalse(sut.filteredCities.isEmpty)
+        XCTAssertEqual(sut.filteredCities.count, cities.count)
         XCTAssertFalse(sut.isLoading)
         XCTAssertNil(sut.errorMessage)
     }
@@ -66,7 +66,8 @@ final class CityListViewModelTests: XCTestCase {
         XCTAssertNotNil(sut.errorMessage)
     }
     
-    func testFilterWithPrefixExpectedCities() {
+    @MainActor
+    func testFilterWithPrefixExpectedCities() async throws {
         // Given
         let cities: [CityRenderModel] = [
             .makeDummy(country: "US", name: "Alabama", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
@@ -74,61 +75,66 @@ final class CityListViewModelTests: XCTestCase {
             .makeDummy(country: "AU", name: "Sydney", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
             .makeDummy(country: "US", name: "Arizona", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
-        sut.cities = cities
-        sut.filteredCities = cities
+        getCitiesUseCaseMock.result = .success(cities)
         
         // When
-        sut.searchCities("Al")
+        await sut.fetchCities()
+        await sut.searchCities("Al")
         
         // Then
         XCTAssertFalse(sut.filteredCities.isEmpty)
         XCTAssertEqual(sut.filteredCities.map{ $0.name }, ["Alabama", "Albuquerque"])
     }
     
-    func testFilterIsCaseInsensitive() {
+    @MainActor
+    func testFilterIsCaseInsensitive() async throws {
         // Given
         let cities: [CityRenderModel] = [
             .makeDummy(country: "AU", name: "Sydney", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
             .makeDummy(country: "ES", name: "santander", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
-        sut.cities = cities
-        sut.filteredCities = cities
+        getCitiesUseCaseMock.result = .success(cities)
+
         
         // When
-        sut.searchCities("S")
+        await sut.fetchCities()
+        await sut.searchCities("S")
         
         // Then
         XCTAssertFalse(sut.filteredCities.isEmpty)
         XCTAssertEqual(sut.filteredCities.map{ $0.name }, ["Sydney", "santander"])
     }
     
-    func testFilterWithNoMatchesReturnsEmptyArray() {
+    @MainActor
+    func testFilterWithNoMatchesReturnsEmptyArray() async throws {
         // Given
         let cities: [CityRenderModel] = [
             .makeDummy(country: "ES", name: "Madrid", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
-        sut.cities = cities
-        sut.filteredCities = cities
+        getCitiesUseCaseMock.result = .success(cities)
         
         // When
-        sut.searchCities("X")
+        await sut.fetchCities()
+        await sut.searchCities("X")
 
         // Then
         XCTAssertTrue(sut.filteredCities.isEmpty)
     }
     
-    func testFilterSortOrderCityThenCountry() {
+    @MainActor
+    func testFilterSortOrderCityThenCountry() async throws {
         // Given
         let cities: [CityRenderModel] = [
             .makeDummy(country: "NL", name: "Amsterdam", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
             .makeDummy(country: "FR", name: "Paris", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
             .makeDummy(country: "US", name: "Paris", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
-        sut.cities = cities
-        sut.filteredCities = cities
+        getCitiesUseCaseMock.result = .success(cities)
+
         
         // When
-        sut.searchCities("")
+        await sut.fetchCities()
+        await sut.searchCities("")
         
         // Then
         XCTAssertFalse(sut.filteredCities.isEmpty)
@@ -143,15 +149,15 @@ final class CityListViewModelTests: XCTestCase {
             .makeDummy(country: "FR", name: "Paris", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
             .makeDummy(country: "US", name: "Paris", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
-        sut.cities = cities
-        sut.filteredCities = cities
+        getCitiesUseCaseMock.result = .success(cities)
         saveFavoriteCityUseCaseMock.result = .success(())
         
         // When
+        await sut.fetchCities()
         await sut.toggleFavorite(for: cities[0])
         
         // Then
-        XCTAssertTrue(sut.cities[0].isFavorite)
+        XCTAssertTrue(sut.filteredCities[0].isFavorite)
     }
     
     @MainActor
@@ -162,13 +168,13 @@ final class CityListViewModelTests: XCTestCase {
             .makeDummy(country: "FR", name: "Paris", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
             .makeDummy(country: "US", name: "Paris", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
-        sut.cities = cities
-        sut.filteredCities = cities
+        getCitiesUseCaseMock.result = .success(cities)
         saveFavoriteCityUseCaseMock.result = .failure(NSError(domain: "", code: 0))
         
         // When
+        await sut.fetchCities()
         await sut.toggleFavorite(for: cities[0])
-        
+    
         // Then
         XCTAssertNotNil(sut.errorMessage)
     }
@@ -181,15 +187,15 @@ final class CityListViewModelTests: XCTestCase {
             .makeDummy(country: "FR", name: "Paris", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
             .makeDummy(country: "US", name: "Paris", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
-        sut.cities = cities
-        sut.filteredCities = cities
+        getCitiesUseCaseMock.result = .success(cities)
         deleteFavoriteCityUseCaseMock.result = .success(())
         
         // When
+        await sut.fetchCities()
         await sut.toggleFavorite(for: cities[0])
 
         // Then
-        XCTAssertFalse(sut.cities[0].isFavorite)
+        XCTAssertFalse(sut.filteredCities[0].isFavorite)
     }
     
     @MainActor
@@ -200,11 +206,11 @@ final class CityListViewModelTests: XCTestCase {
             .makeDummy(country: "FR", name: "Paris", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
             .makeDummy(country: "US", name: "Paris", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
-        sut.cities = cities
-        sut.filteredCities = cities
+        getCitiesUseCaseMock.result = .success(cities)
         deleteFavoriteCityUseCaseMock.result = .failure(NSError(domain: "", code: 0))
 
         // When
+        await sut.fetchCities()
         await sut.toggleFavorite(for: cities[0])
 
         // Then

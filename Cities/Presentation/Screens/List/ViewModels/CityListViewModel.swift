@@ -46,8 +46,8 @@ final class CityListViewModel: ObservableObject {
     @MainActor
     func searchCities(_ value: String) async {
         let searchTerm = value.lowercased()
-        let source = filteredCities
-        let chunkSize = 200
+        let source = cities
+        let chunkSize = 1000
 
         let result = await withTaskGroup(of: (index: Int, result: [CityRenderModel]).self) { group in
             for (i, chunk) in source.chunked(into: chunkSize).enumerated() {
@@ -75,7 +75,12 @@ final class CityListViewModel: ObservableObject {
     
     @MainActor
     func applyFilter(_ filter: Filter) async {
-        
+        switch filter {
+        case .all:
+            filteredCities = cities
+        case .favorites:
+            await searchFavorites()
+        }
     }
     
     @MainActor
@@ -102,5 +107,32 @@ final class CityListViewModel: ObservableObject {
         } else {
             errorMessage = "unexpected_error"
         }
+    }
+    
+    @MainActor
+    private func searchFavorites() async {
+        let source = cities
+        let chunkSize = 1000
+
+        let result = await withTaskGroup(of: (index: Int, result: [CityRenderModel]).self) { group in
+            for (i, chunk) in source.chunked(into: chunkSize).enumerated() {
+                group.addTask {
+                    let filtered = chunk.filter { $0.isFavorite }
+                    return (index: i, result: filtered)
+                }
+            }
+
+            var partials: [(index: Int, result: [CityRenderModel])] = []
+
+            for await item in group {
+                partials.append(item)
+            }
+
+            return partials
+                .sorted(by: { $0.index < $1.index })
+                .flatMap { $0.result }
+        }
+
+        filteredCities = result
     }
 }

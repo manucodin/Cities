@@ -60,6 +60,9 @@ private extension CityListView {
         .onChange(of: searchText) { searchText in
             Task { await viewModel.searchCities(searchText) }
         }
+        .onChange(of: filter) { filter in
+            Task { await viewModel.applyFilter(filter) }
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
