@@ -17,6 +17,9 @@
         }
       }
     },
+    "Bandera: %@" : {
+
+    },
     "cities_title" : {
       "localizations" : {
         "en" : {
@@ -99,6 +102,9 @@
         }
       }
     },
+    "Latitud: %.4f" : {
+
+    },
     "Lon: %.2f" : {
       "localizations" : {
         "en" : {
@@ -114,6 +120,12 @@
           }
         }
       }
+    },
+    "Longitud: %.4f" : {
+
+    },
+    "País: %@" : {
+
     },
     "progress_loading" : {
       "extractionState" : "manual",
@@ -147,6 +159,9 @@
           }
         }
       }
+    },
+    "Ver en mapa" : {
+
     }
   },
   "version" : "1.0"

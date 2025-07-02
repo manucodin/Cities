@@ -46,9 +46,11 @@ private extension CityListView {
     @ViewBuilder
     var list: some View {
         List(viewModel.filteredCities, id: \.id) { city in
-            CityRowView(city: city) {
-                Task {
-                    await viewModel.toggleFavorite(for: city)
+            NavigationLink(destination: CityMapView(city: city)) {
+                CityRowView(city: city) {
+                    Task {
+                        await viewModel.toggleFavorite(for: city)
+                    }
                 }
             }
         }
