@@ -52,10 +52,10 @@ private extension CityDetailView {
     @ViewBuilder
     var infoView: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("País: \(city.country)")
-            Text("Bandera: \(city.countryFlag)")
-            Text("Latitud: \(city.coordinates.latitude, specifier: "%.4f")")
-            Text("Longitud: \(city.coordinates.longitude, specifier: "%.4f")")
+            Text("Country: \(city.country)")
+            Text("Flag: \(city.countryFlag)")
+            Text("Latitude: \(city.coordinates.latitude, specifier: "%.4f")")
+            Text("Longitude: \(city.coordinates.longitude, specifier: "%.4f")")
         }
         .font(.subheadline)
         .foregroundStyle(.secondary)
@@ -68,7 +68,7 @@ private extension CityDetailView {
             Button {
                 dismiss()
             } label: {
-                Label("Ver en mapa", systemImage: "map")
+                Label("Open map", systemImage: "map")
                     .padding(.horizontal)
             }
             .buttonStyle(.borderedProminent)

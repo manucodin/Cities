@@ -17,9 +17,6 @@
         }
       }
     },
-    "Bandera: %@" : {
-
-    },
     "cities_title" : {
       "localizations" : {
         "en" : {
@@ -32,6 +29,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ciudades"
+          }
+        }
+      }
+    },
+    "Country: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Country: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "País: %@"
           }
         }
       }
@@ -86,6 +99,22 @@
         }
       }
     },
+    "Flag: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flag: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bandera: %@"
+          }
+        }
+      }
+    },
     "Lat: %.2f" : {
       "localizations" : {
         "en" : {
@@ -102,8 +131,21 @@
         }
       }
     },
-    "Latitud: %.4f" : {
-
+    "Latitude: %.4f" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latitude: %.4f"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latitud: %.4f"
+          }
+        }
+      }
     },
     "Lon: %.2f" : {
       "localizations" : {
@@ -121,11 +163,37 @@
         }
       }
     },
-    "Longitud: %.4f" : {
-
+    "Longitude: %.4f" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longitude: %.4f"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longitud: %.4f"
+          }
+        }
+      }
     },
-    "País: %@" : {
-
+    "Open map" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open map"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar mapa"
+          }
+        }
+      }
     },
     "progress_loading" : {
       "extractionState" : "manual",
@@ -159,9 +227,6 @@
           }
         }
       }
-    },
-    "Ver en mapa" : {
-
     }
   },
   "version" : "1.0"
