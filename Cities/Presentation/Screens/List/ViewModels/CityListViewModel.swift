@@ -9,10 +9,11 @@ import Foundation
 import Combine
 
 final class CityListViewModel: ObservableObject {
-    @Published var cities: [CityRenderModel] = []
     @Published var filteredCities: [CityRenderModel] = []
     @Published var isLoading = true
     @Published var errorMessage: String?
+    
+    private var cities: [CityRenderModel] = []
     
     private let getCitiesUseCase: GetCitiesUseCaseContract
     private let saveFavoriteCityUseCase: SaveFavoriteCityUseCaseContract
@@ -42,17 +43,39 @@ final class CityListViewModel: ObservableObject {
         }
     }
     
-    func searchCities(_ value: String) {
-        guard value.isEmpty == false else {
-            filteredCities = cities
-            return
-        }
-        
+    @MainActor
+    func searchCities(_ value: String) async {
         let searchTerm = value.lowercased()
-        let result = cities.filter { city in
-            city.name.lowercased().hasPrefix(searchTerm)
+        let source = filteredCities
+        let chunkSize = 200
+
+        let result = await withTaskGroup(of: (index: Int, result: [CityRenderModel]).self) { group in
+            for (i, chunk) in source.chunked(into: chunkSize).enumerated() {
+                group.addTask {
+                    let filtered = value.isEmpty
+                        ? chunk
+                        : chunk.filter { $0.name.lowercased().hasPrefix(searchTerm) }
+                    return (index: i, result: filtered)
+                }
+            }
+
+            var partials: [(index: Int, result: [CityRenderModel])] = []
+
+            for await item in group {
+                partials.append(item)
+            }
+
+            return partials
+                .sorted(by: { $0.index < $1.index })
+                .flatMap { $0.result }
         }
+
         filteredCities = result
+    }
+    
+    @MainActor
+    func applyFilter(_ filter: Filter) async {
+        
     }
     
     @MainActor
