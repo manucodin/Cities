@@ -45,7 +45,11 @@ private extension CityListView {
     @ViewBuilder
     var list: some View {
         List(viewModel.filteredCities, id: \.id) { city in
-            CityRowView(city: city)
+            CityRowView(city: city) {
+                Task {
+                    await viewModel.toggleFavorite(for: city)
+                }
+            }
         }
         .searchable(
             text: $searchText,

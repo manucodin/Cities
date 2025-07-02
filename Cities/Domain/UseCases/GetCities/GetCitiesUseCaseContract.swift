@@ -6,5 +6,5 @@
 //
 
 protocol GetCitiesUseCaseContract: Sendable {
-    func getCities() async throws -> [City]
+    func getCities() async throws -> [CityRenderModel]
 }

@@ -27,7 +27,7 @@ final class CityServiceTests: XCTestCase {
         ]
         """.data(using: .utf8)!
 
-        let mockClient = MockHTTPClient(result: .success(json))
+        let mockClient = HTTPClientMock(result: .success(json))
         let service = CityService(httpClient: mockClient)
 
         // When
@@ -41,7 +41,7 @@ final class CityServiceTests: XCTestCase {
 
     func testFetchCitiesErrorNetworkError() async {
         // Given
-        let mockClient = MockHTTPClient(result: .failure(NetworkError.networkError))
+        let mockClient = HTTPClientMock(result: .failure(NetworkError.networkError))
         let service = CityService(httpClient: mockClient)
 
         do {
@@ -62,7 +62,7 @@ final class CityServiceTests: XCTestCase {
     func testFetchCitiesErrorInvalidJSON() async {
         // Given
         let invalidJSON = Data("not valid json".utf8)
-        let mockClient = MockHTTPClient(result: .success(invalidJSON))
+        let mockClient = HTTPClientMock(result: .success(invalidJSON))
         let service = CityService(httpClient: mockClient)
 
         do {

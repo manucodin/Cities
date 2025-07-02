@@ -7,16 +7,22 @@
 
 import CoreData
 
-struct PersistenceController {
+final class PersistenceController: Sendable {
     static let shared = PersistenceController()
-
+    
+    let container: NSPersistentContainer
+    
+    var viewContext: NSManagedObjectContext {
+        container.viewContext
+    }
+    
     @MainActor
     static let preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
-        let viewContext = result.container.viewContext
-        for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+        let viewContext = result.viewContext
+        for index in 0..<10 {
+            let newItem = FavoriteCityEntity(context: viewContext)
+            newItem.id = Int32(index)
         }
         do {
             try viewContext.save()
@@ -28,9 +34,7 @@ struct PersistenceController {
         }
         return result
     }()
-
-    let container: NSPersistentContainer
-
+    
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "Cities")
         if inMemory {
@@ -53,5 +57,9 @@ struct PersistenceController {
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
+    }
+    
+    func newBackgroundContext() -> NSManagedObjectContext {
+        container.newBackgroundContext()
     }
 }

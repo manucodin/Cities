@@ -1,5 +1,5 @@
 //
-//  CityDataSourceMock.swift
+//  GetCitiesUseCaseMock.swift
 //  Cities
 //
 //  Created by Manuel Rodríguez Sebastián on 2/7/25.
@@ -7,13 +7,11 @@
 
 @testable import Cities
 
-import Foundation
-
-final class CityDataSourceMock: CityDataSourceContract {
-    public var result: Result<[City], Error>?
+final class GetCitiesUseCaseMock: GetCitiesUseCaseContract, @unchecked Sendable {
+    var result: Result<[CityRenderModel], Error>?
     
-    func fetchCities() async throws -> [City] {
-        guard let result = result else {
+    func getCities() async throws -> [CityRenderModel] {
+        guard let result else {
             fatalError("No result provided")
         }
         

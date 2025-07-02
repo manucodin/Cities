@@ -1,5 +1,5 @@
 //
-//  MockHTTPClient.swift
+//  HTTPClientMock.swift
 //  Cities
 //
 //  Created by Manuel Rodríguez Sebastián on 1/7/25.
@@ -9,7 +9,7 @@
 
 import Foundation
 
-final class MockHTTPClient: HTTPClientContract {
+final class HTTPClientMock: HTTPClientContract {
     var result: Result<Data, Error>
     
     init(result: Result<Data, Error>) {

@@ -6,14 +6,14 @@
 //
 
 final class CityDataSource: CityDataSourceContract {
-    private let service: CityServiceProtocol
+    private let cityService: CityServiceProtocol
     private let mapper = CityMapper()
     
-    init(service: CityServiceProtocol = CityService()) {
-        self.service = service
+    init(cityService: CityServiceProtocol = CityService()) {
+        self.cityService = cityService
     }
     
     func fetchCities() async throws -> [City] {
-        return try await service.fetchCities().compactMap{ mapper.map($0) }
+        return try await cityService.fetchCities().compactMap{ mapper.map($0) }
     }
 }
