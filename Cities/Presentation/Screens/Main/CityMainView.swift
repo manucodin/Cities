@@ -13,20 +13,38 @@ struct CitiesMainView: View {
     
     var body: some View {
         GeometryReader { geoReader in
-            NavigationView {
-                Group{
+            NavigationStack {
+                Group {
                     if orientation.isLandscape {
                         HStack(spacing: 0) {
                             CityListView(viewModel: viewModel)
                                 .frame(width: geoReader.size.width*0.6)
                             Divider()
-                            CityMapView(city: .dummy, selectedCity: nil)
+                            CityMapView(selectedCity: $viewModel.selectedCity)
                         }
                     } else {
                         CityListView(viewModel: viewModel)
+                            .navigationDestination(item: $viewModel.selectedCity) { city in
+                                CityMapView(selectedCity: .constant(city))
+                            }
                     }
                 }
                 .navigationTitle("cities_title")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Menu {
+                            ForEach(Filter.allCases) { option in
+                                Button {
+                                    viewModel.filter = option
+                                } label: {
+                                    Label(option.localizedValue, systemImage: viewModel.filter == option ? "checkmark" : "")
+                                }
+                            }
+                        } label: {
+                            Label("filter_button", systemImage: "line.3.horizontal.decrease.circle")
+                        }
+                    }
+                }
             }
         }
         .detectOrientation($orientation)

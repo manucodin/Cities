@@ -9,7 +9,6 @@ import SwiftUI
 
 struct CityListView: View {
     @ObservedObject var viewModel: CityListViewModel
-    @State private var orientation = UIDevice.current.orientation
 
     var body: some View {
         Group {
@@ -58,13 +57,16 @@ private extension CityListView {
     
     @ViewBuilder
     func cityRow(_ city: CityRenderModel) -> some View {
-        NavigationLink(destination: CityMapView(city: city)) {
+        Button {
+            viewModel.selectedCity = city
+        } label: {
             CityRowView(city: city) {
                 Task {
                     await viewModel.toggleFavorite(for: city)
                 }
             }
-        }.accessibilityIdentifier("city_list_row")
+        }
+        .accessibilityIdentifier("city_list_row")
     }
 }
 

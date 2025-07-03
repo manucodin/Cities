@@ -84,7 +84,6 @@
       }
     },
     "filter_button" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
