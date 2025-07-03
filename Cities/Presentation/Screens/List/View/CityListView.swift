@@ -8,38 +8,18 @@
 import SwiftUI
 
 struct CityListView: View {
-    @StateObject private var viewModel = CityListViewModel()
-    
+    @ObservedObject var viewModel: CityListViewModel
+    @State private var orientation = UIDevice.current.orientation
+
     var body: some View {
-        NavigationView {
-            Group {
-                if viewModel.isLoading {
-                    loading
-                } else if let errorMessage = viewModel.errorMessage {
-                    error(errorMessage)
-                } else {
-                    list
-                }
+        Group {
+            if viewModel.isLoading {
+                loading
+            } else if let errorMessage = viewModel.errorMessage {
+                error(errorMessage)
+            } else {
+                list
             }
-            .navigationTitle("cities_title")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu {
-                        ForEach(Filter.allCases) { option in
-                            Button {
-                                viewModel.filter = option
-                            } label: {
-                                Label(option.localizedValue, systemImage: viewModel.filter == option ? "checkmark" : "")
-                            }
-                        }
-                    } label: {
-                        Label("filter_button", systemImage: "line.3.horizontal.decrease.circle")
-                    }
-                }
-            }
-        }
-        .task {
-            await viewModel.fetchCities()
         }
     }
 }
@@ -89,5 +69,5 @@ private extension CityListView {
 }
 
 #Preview {
-    CityListView()
+    CityListView(viewModel: CityListViewModel())
 }
