@@ -33,29 +33,18 @@
         }
       }
     },
-    "Country: %@" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Country: %@"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "País: %@"
-          }
-        }
-      }
-    },
     "Country: %@ %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Country: %1$@ %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "País: %1$@ %2$@"
           }
         }
       }
@@ -106,23 +95,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Filtrar"
-          }
-        }
-      }
-    },
-    "Flag: %@" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Flag: %@"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bandera: %@"
           }
         }
       }

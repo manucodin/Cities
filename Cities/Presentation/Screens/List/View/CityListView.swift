@@ -21,7 +21,22 @@ struct CityListView: View {
                     list
                 }
             }
-            .navigationTitle("cities_title")
+        }
+        .navigationTitle("cities_title")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    ForEach(Filter.allCases) { option in
+                        Button {
+                            viewModel.filter = option
+                        } label: {
+                            Label(option.localizedValue, systemImage: viewModel.filter == option ? "checkmark" : "")
+                        }
+                    }
+                } label: {
+                    Label("filter_button", systemImage: "line.3.horizontal.decrease.circle")
+                }
+            }
         }
         .task {
             await viewModel.fetchCities()
@@ -44,13 +59,7 @@ private extension CityListView {
     @ViewBuilder
     var list: some View {
         List(viewModel.filteredCities, id: \.id) { city in
-            NavigationLink(destination: CityMapView(city: city)) {
-                CityRowView(city: city) {
-                    Task {
-                        await viewModel.toggleFavorite(for: city)
-                    }
-                }
-            }
+            cityRow(city)
         }
         .listStyle(.plain)
         .searchable(
@@ -64,21 +73,18 @@ private extension CityListView {
         .onChange(of: viewModel.filter) {
             Task { await viewModel.applyFilter() }
         }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Menu {
-                    ForEach(Filter.allCases) { option in
-                        Button {
-                            viewModel.filter = option
-                        } label: {
-                            Label(option.localizedValue, systemImage: viewModel.filter == option ? "checkmark" : "")
-                        }
-                    }
-                } label: {
-                    Label("filter_button", systemImage: "line.3.horizontal.decrease.circle")
+        .accessibilityIdentifier("city_list")
+    }
+    
+    @ViewBuilder
+    func cityRow(_ city: CityRenderModel) -> some View {
+        NavigationLink(destination: CityMapView(city: city)) {
+            CityRowView(city: city) {
+                Task {
+                    await viewModel.toggleFavorite(for: city)
                 }
             }
-        }
+        }.accessibilityIdentifier("city_list_row_\(city.name.lowercased())_\(city.country.lowercased())")
     }
 }
 

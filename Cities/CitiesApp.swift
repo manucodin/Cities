@@ -15,6 +15,7 @@ struct CitiesApp: App {
         WindowGroup {
             CityListView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .accessibilityElement(children: .contain)
         }
     }
 }
