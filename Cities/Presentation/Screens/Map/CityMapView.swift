@@ -74,7 +74,7 @@ private extension CityMapView {
                 Spacer()
                 locationButton
             }
-        }
+        }.padding()
     }
     
     @ViewBuilder
