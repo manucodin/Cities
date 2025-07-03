@@ -1,5 +1,7 @@
 # Cities App
 
+![Xcode version](https://img.shields.io/badge/Xcode-16.4-blue?logo=Xcode&logoColor=white) ![iOS version](https://img.shields.io/badge/iOS-18.0-blue&logo=apple&logoColor=white) ![Swift version](https://img.shields.io/badge/Swift-6.0-orange?logo=Swift&logoColor=white) 
+
 ## ✨ Description
 This repository contains Ualá iOS Mobile Challange. The goal of this assignment is to evaluate the problem solving skills, UX judgement and code quality. This proyect is an iOS application that allows users to explore, search, and save favorite cities. The app uses a modular architecture that separates the data, domain, and presentation layers, ensuring clean and maintainable code.
 
