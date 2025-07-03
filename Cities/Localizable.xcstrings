@@ -33,6 +33,12 @@
         }
       }
     },
+    "city_list_empty_state_message" : {
+      "extractionState" : "manual"
+    },
+    "city_list_empty_state_title" : {
+      "extractionState" : "manual"
+    },
     "Country: %@ %@" : {
       "localizations" : {
         "en" : {
@@ -164,10 +170,36 @@
       }
     },
     "Off" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off"
+          }
+        }
+      }
     },
     "On" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On"
+          }
+        }
+      }
     },
     "Open map" : {
       "localizations" : {

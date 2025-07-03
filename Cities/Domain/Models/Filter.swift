@@ -14,9 +14,9 @@ enum Filter: String, CaseIterable, Identifiable {
     var localizedValue: String {
         switch self {
         case .all:
-            return "filter_all"
+            return String(localized: "filter_all")
         case .favorites:
-            return "filte_favorites"
+            return String(localized: "filte_favorites")
         }
     }
 }
