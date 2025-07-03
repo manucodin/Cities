@@ -13,13 +13,7 @@ struct CityDetailView: View {
     let city: CityRenderModel
 
     var body: some View {
-        if #available(iOS 16.0, *) {
-            contentView
-                .presentationDetents([.height(250)])
-                .presentationDragIndicator(.visible)
-        } else {
-            contentView
-        }
+        contentView
     }
 }
 
