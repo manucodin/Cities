@@ -21,6 +21,7 @@ struct CityRowView: View {
                         .foregroundColor(.accentColor)
                     Text("\(city.name), \(city.countryFlag) \(city.country)")
                         .font(.headline)
+                        .accessibilityIdentifier("city_list_row_title_\(city.name.lowercased())_\(city.country.lowercased())")
                 }
                 
                 HStack {
@@ -40,6 +41,8 @@ struct CityRowView: View {
             }
             .buttonStyle(.plain)
             .padding(.trailing, 8)
+            .accessibilityIdentifier("city_list_row_favorite_button")
+            .accessibilityValue(city.isFavorite ? "On": "Off")
         }
         .padding(.vertical, 8)
     }

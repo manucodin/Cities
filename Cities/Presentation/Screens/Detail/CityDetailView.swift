@@ -39,6 +39,7 @@ private extension CityDetailView {
         Text(city.name)
             .font(.title2)
             .fontWeight(.semibold)
+            .accessibilityIdentifier("city_detail_header")
     }
     
     @ViewBuilder
@@ -50,6 +51,8 @@ private extension CityDetailView {
         }
         .font(.subheadline)
         .foregroundStyle(.secondary)
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("city_detail_info")
     }
     
     @ViewBuilder

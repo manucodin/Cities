@@ -24,13 +24,30 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A905B0032E1481A800EE6211 /* Cities.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cities.xctestplan; sourceTree = "<group>"; };
 		A97669062E147A7B00D735D2 /* Cities.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cities.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A97669182E147A7C00D735D2 /* CitiesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CitiesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A97669222E147A7C00D735D2 /* CitiesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CitiesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A94D604A2E169E8C0049BAEE /* Exceptions for "TestPlans" folder in "Cities" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				CitiesTests.xctestplan,
+			);
+			target = A97669052E147A7B00D735D2 /* Cities */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		A94D60492E169E860049BAEE /* TestPlans */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A94D604A2E169E8C0049BAEE /* Exceptions for "TestPlans" folder in "Cities" target */,
+			);
+			path = TestPlans;
+			sourceTree = "<group>";
+		};
 		A97669082E147A7B00D735D2 /* Cities */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Cities;
@@ -76,7 +93,7 @@
 		A97668FD2E147A7B00D735D2 = {
 			isa = PBXGroup;
 			children = (
-				A905B0032E1481A800EE6211 /* Cities.xctestplan */,
+				A94D60492E169E860049BAEE /* TestPlans */,
 				A97669082E147A7B00D735D2 /* Cities */,
 				A976691B2E147A7C00D735D2 /* CitiesTests */,
 				A97669252E147A7C00D735D2 /* CitiesUITests */,
@@ -110,6 +127,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				A94D60492E169E860049BAEE /* TestPlans */,
 				A97669082E147A7B00D735D2 /* Cities */,
 			);
 			name = Cities;

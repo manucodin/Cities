@@ -36,6 +36,7 @@ struct CityMapView: View {
                         .shadow(radius: 2)
                 }
                 .buttonStyle(.plain)
+                .accessibilityIdentifier("city_map_button")
             }
         }
         .ignoresSafeArea(edges: .bottom)
