@@ -13,11 +13,13 @@ final class CityListViewModel: ObservableObject {
     @Published var selectedCity: CityRenderModel?
     @Published var searchText: String = ""
     @Published var filter: Filter = .all
-    @Published var isLoading = true
+    @Published var isLoading: Bool = true
     @Published var errorMessage: String?
+    @Published var showEmptyState: Bool = false
     
     private var cities: [CityRenderModel] = []
-        
+    private var cancellables = Set<AnyCancellable>()
+    
     private let getCitiesUseCase: GetCitiesUseCaseContract
     private let saveFavoriteCityUseCase: SaveFavoriteCityUseCaseContract
     private let deleteFavoriteCityUseCase: DeleteFavoriteCityUseCaseContract
@@ -29,6 +31,13 @@ final class CityListViewModel: ObservableObject {
         self.saveFavoriteCityUseCase = saveFavoriteCityUseCase
         self.deleteFavoriteCityUseCase = deleteFavoriteCityUseCase
         
+        setupObservables()
+    }
+    
+    func setupObservables() {
+        $filteredCities.dropFirst().sink { [weak self] cities in
+            self?.showEmptyState = cities.isEmpty
+        }.store(in: &cancellables)
     }
     
     @MainActor

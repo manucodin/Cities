@@ -1,5 +1,5 @@
 //
-//  EmptyStateView.swift
+//  ErrorStateView.swift
 //  Cities
 //
 //  Created by Manuel Rodríguez Sebastián on 3/7/25.
@@ -7,36 +7,33 @@
 
 import SwiftUI
 
-struct EmptyStateView: View {
+struct ErrorStateView: View {
     let imageName: String?
     let title: String?
     let message: String?
-    
-    init(imageName: String? = nil, title: String? = nil, message: String? = nil) {
-        self.imageName = imageName
-        self.title = title
-        self.message = message
-    }
-    
+    let retryButtonLabel: String?
+    let retryAction: (() -> Void)?
+
     var body: some View {
         VStack(spacing: 16) {
             imageView
             titleView
             messageView
+            retryButton
         }
         .padding()
     }
 }
 
-private extension EmptyStateView {
+private extension ErrorStateView {
     @ViewBuilder
     var imageView: some View {
         if let imageName {
             Image(systemName: imageName)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 100, height: 100)
-                .foregroundStyle(.secondary)
+                .frame(width: 80, height: 80)
+                .foregroundStyle(.error)
                 .symbolEffect(.bounce.up.wholeSymbol, options: .nonRepeating)
         } else {
             EmptyView()
@@ -66,8 +63,27 @@ private extension EmptyStateView {
             EmptyView()
         }
     }
+    
+    @ViewBuilder
+    var retryButton: some View {
+        if let retryAction, let retryButtonLabel {
+            Button(action: retryAction) {
+                Text(retryButtonLabel)
+                    .roundedButtonStyle()
+            }
+            .padding(.horizontal)
+        } else {
+            EmptyView()
+        }
+    }
 }
 
 #Preview {
-    EmptyStateView(imageName: "eye.slash", title: "Title", message: "Message")
+    ErrorStateView(
+        imageName: "eye.slash",
+        title: "Title",
+        message: "Message",
+        retryButtonLabel: "Retry",
+        retryAction: {}
+    )
 }

@@ -30,6 +30,11 @@ struct CitiesMainView: View {
                     }
                 }
                 .navigationTitle("cities_title")
+                .searchable(
+                    text: $viewModel.searchText,
+                    placement: .navigationBarDrawer(displayMode: .always),
+                    prompt: "search_city_prompt"
+                )
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Menu {
