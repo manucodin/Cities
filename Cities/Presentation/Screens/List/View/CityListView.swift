@@ -21,20 +21,20 @@ struct CityListView: View {
                     list
                 }
             }
-        }
-        .navigationTitle("cities_title")
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Menu {
-                    ForEach(Filter.allCases) { option in
-                        Button {
-                            viewModel.filter = option
-                        } label: {
-                            Label(option.localizedValue, systemImage: viewModel.filter == option ? "checkmark" : "")
+            .navigationTitle("cities_title")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Menu {
+                        ForEach(Filter.allCases) { option in
+                            Button {
+                                viewModel.filter = option
+                            } label: {
+                                Label(option.localizedValue, systemImage: viewModel.filter == option ? "checkmark" : "")
+                            }
                         }
+                    } label: {
+                        Label("filter_button", systemImage: "line.3.horizontal.decrease.circle")
                     }
-                } label: {
-                    Label("filter_button", systemImage: "line.3.horizontal.decrease.circle")
                 }
             }
         }
@@ -84,7 +84,7 @@ private extension CityListView {
                     await viewModel.toggleFavorite(for: city)
                 }
             }
-        }.accessibilityIdentifier("city_list_row_\(city.name.lowercased())_\(city.country.lowercased())")
+        }.accessibilityIdentifier("city_list_row")
     }
 }
 

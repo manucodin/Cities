@@ -163,6 +163,12 @@
         }
       }
     },
+    "Off" : {
+
+    },
+    "On" : {
+
+    },
     "Open map" : {
       "localizations" : {
         "en" : {
