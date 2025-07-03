@@ -10,13 +10,14 @@ import Combine
 
 final class CityListViewModel: ObservableObject {
     @Published var filteredCities: [CityRenderModel] = []
+    @Published var selectedCity: CityRenderModel?
     @Published var searchText: String = ""
     @Published var filter: Filter = .all
     @Published var isLoading = true
     @Published var errorMessage: String?
     
     private var cities: [CityRenderModel] = []
-    
+        
     private let getCitiesUseCase: GetCitiesUseCaseContract
     private let saveFavoriteCityUseCase: SaveFavoriteCityUseCaseContract
     private let deleteFavoriteCityUseCase: DeleteFavoriteCityUseCaseContract
@@ -27,6 +28,7 @@ final class CityListViewModel: ObservableObject {
         self.getCitiesUseCase = getCitiesUseCase
         self.saveFavoriteCityUseCase = saveFavoriteCityUseCase
         self.deleteFavoriteCityUseCase = deleteFavoriteCityUseCase
+        
     }
     
     @MainActor
