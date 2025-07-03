@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "22D791BD-2461-4655-9D10-2441405AD37C",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Cities.xcodeproj",
+        "identifier" : "A97669212E147A7C00D735D2",
+        "name" : "CitiesUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
