@@ -7,7 +7,7 @@
 
 import CoreLocation
 
-public struct CityRenderModel: Identifiable, Sendable {
+public struct CityRenderModel: Identifiable, Equatable, Hashable, Sendable {
     public let id: Int
     public let name: String
     public let country: String
@@ -21,5 +21,13 @@ public struct CityRenderModel: Identifiable, Sendable {
             .compactMap { UnicodeScalar(127397 + $0.value) }
             .map { String($0) }
             .joined()
+    }
+    
+    public static func == (lhs: CityRenderModel, rhs: CityRenderModel) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

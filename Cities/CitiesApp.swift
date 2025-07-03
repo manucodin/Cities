@@ -13,9 +13,8 @@ struct CitiesApp: App {
 
     var body: some Scene {
         WindowGroup {
-            CityListView()
+            CitiesMainView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                .accessibilityElement(children: .contain)
         }
     }
 }
