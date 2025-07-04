@@ -14,11 +14,19 @@ struct CityListView: View {
         Group {
             if viewModel.isLoading {
                 loading
+            } else if viewModel.showEmptyState {
+                emptyState
             } else if let errorMessage = viewModel.errorMessage {
                 error(errorMessage)
             } else {
                 list
             }
+        }
+        .onChange(of: viewModel.searchText) {
+            Task { await viewModel.searchCities() }
+        }
+        .onChange(of: viewModel.filter) {
+            Task { await viewModel.applyFilter() }
         }
     }
 }
@@ -31,27 +39,23 @@ private extension CityListView {
     
     @ViewBuilder
     func error(_ errorMessage: String) -> some View {
-        Text(errorMessage)
-            .foregroundColor(.red)
+        ErrorStateView(
+            imageName: "exclamationmark.bubble.fill",
+            title: String(localized: "city_list_error_title"),
+            message: errorMessage,
+            retryButtonLabel: String(localized: "city_list_error_retry_button"),
+            retryAction: {
+                Task { await viewModel.fetchCities() }
+            }
+        )
     }
     
     @ViewBuilder
     var list: some View {
-        List(viewModel.filteredCities, id: \.id) { city in
+        List(viewModel.cities, id: \.id) { city in
             cityRow(city)
         }
         .listStyle(.plain)
-        .searchable(
-            text: $viewModel.searchText,
-            placement: .navigationBarDrawer(displayMode: .always),
-            prompt: "search_city_prompt"
-        )
-        .onChange(of: viewModel.searchText) {
-            Task { await viewModel.searchCities() }
-        }
-        .onChange(of: viewModel.filter) {
-            Task { await viewModel.applyFilter() }
-        }
         .accessibilityIdentifier("city_list")
     }
     
@@ -67,6 +71,15 @@ private extension CityListView {
             }
         }
         .accessibilityIdentifier("city_list_row")
+    }
+    
+    @ViewBuilder
+    var emptyState: some View {
+        EmptyStateView(
+            imageName: "tray",
+            title: String(localized: "city_list_empty_state_title"),
+            message: String(localized: "city_list_empty_state_message")
+        )
     }
 }
 

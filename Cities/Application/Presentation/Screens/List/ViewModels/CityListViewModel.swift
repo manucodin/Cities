@@ -9,15 +9,19 @@ import Foundation
 import Combine
 
 final class CityListViewModel: ObservableObject {
-    @Published var filteredCities: [CityRenderModel] = []
+    @Published var cities: [CityRenderModel] = []
     @Published var selectedCity: CityRenderModel?
     @Published var searchText: String = ""
     @Published var filter: Filter = .all
-    @Published var isLoading = true
+    @Published var isLoading: Bool = true
     @Published var errorMessage: String?
+    @Published var showEmptyState: Bool = false
     
-    private var cities: [CityRenderModel] = []
-        
+    private var citiesRepository: [CityRenderModel] = []
+    private var filteredCities: [CityRenderModel] = []
+    
+    private var cancellables = Set<AnyCancellable>()
+    
     private let getCitiesUseCase: GetCitiesUseCaseContract
     private let saveFavoriteCityUseCase: SaveFavoriteCityUseCaseContract
     private let deleteFavoriteCityUseCase: DeleteFavoriteCityUseCaseContract
@@ -29,6 +33,16 @@ final class CityListViewModel: ObservableObject {
         self.saveFavoriteCityUseCase = saveFavoriteCityUseCase
         self.deleteFavoriteCityUseCase = deleteFavoriteCityUseCase
         
+        setupObservables()
+    }
+    
+    func setupObservables() {
+        $cities.dropFirst().drop(untilOutputFrom: $isLoading).sink { [weak self] cities in
+            self?.showEmptyState = cities.isEmpty
+        }.store(in: &cancellables)
+        
+        
+        let test = Set<Int>()
     }
     
     @MainActor
@@ -41,6 +55,7 @@ final class CityListViewModel: ObservableObject {
         do {
             let result = try await getCitiesUseCase.getCities()
             cities = result
+            citiesRepository = result
             filteredCities = result
         } catch (let error){
             errorMessage = "Error al cargar ciudades: \(error.localizedDescription)"
@@ -50,8 +65,8 @@ final class CityListViewModel: ObservableObject {
     @MainActor
     func searchCities() async {
         let searchTerm = searchText.lowercased()
-        let source = cities
-        let chunkSize = 1000
+        let source = filter == .all ? citiesRepository : filteredCities
+        let chunkSize = 2000
 
         let result = await withTaskGroup(of: (index: Int, result: [CityRenderModel]).self) { group in
             for (i, chunk) in source.chunked(into: chunkSize).enumerated() {
@@ -74,14 +89,14 @@ final class CityListViewModel: ObservableObject {
                 .flatMap { $0.result }
         }
 
-        filteredCities = result
+        cities = result
     }
     
     @MainActor
     func applyFilter() async {
         switch filter {
         case .all:
-            filteredCities = cities
+            cities = citiesRepository
         case .favorites:
             await searchFavorites()
         }
@@ -98,8 +113,12 @@ final class CityListViewModel: ObservableObject {
                 try await saveFavoriteCityUseCase.addFavorite(city.id)
             }
             
+            let id = cities[index].id
             cities[index].isFavorite.toggle()
-            filteredCities = cities
+
+            if let repositoryIndex = citiesRepository.firstIndex(where: { $0.id == id }) {
+                citiesRepository[repositoryIndex].isFavorite.toggle()
+            }
         } catch (let error) {
             errorMessage = "Error al actualizar la ciudad favorita: \(error.localizedDescription)"
         }
@@ -115,8 +134,8 @@ final class CityListViewModel: ObservableObject {
     
     @MainActor
     private func searchFavorites() async {
-        let source = cities
-        let chunkSize = 1000
+        let source = citiesRepository
+        let chunkSize = 2000
 
         let result = await withTaskGroup(of: (index: Int, result: [CityRenderModel]).self) { group in
             for (i, chunk) in source.chunked(into: chunkSize).enumerated() {
@@ -137,6 +156,7 @@ final class CityListViewModel: ObservableObject {
                 .flatMap { $0.result }
         }
 
+        cities = result
         filteredCities = result
     }
 }

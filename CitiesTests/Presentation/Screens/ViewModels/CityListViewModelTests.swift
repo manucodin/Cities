@@ -47,8 +47,8 @@ final class CityListViewModelTests: XCTestCase {
         await sut.fetchCities()
         
         // Then
-        XCTAssertFalse(sut.filteredCities.isEmpty)
-        XCTAssertEqual(sut.filteredCities.count, cities.count)
+        XCTAssertFalse(sut.cities.isEmpty)
+        XCTAssertEqual(sut.cities.count, cities.count)
         XCTAssertFalse(sut.isLoading)
         XCTAssertNil(sut.errorMessage)
     }
@@ -83,8 +83,8 @@ final class CityListViewModelTests: XCTestCase {
         await sut.searchCities()
         
         // Then
-        XCTAssertFalse(sut.filteredCities.isEmpty)
-        XCTAssertEqual(sut.filteredCities.map{ $0.name }, ["Alabama", "Albuquerque"])
+        XCTAssertFalse(sut.cities.isEmpty)
+        XCTAssertEqual(sut.cities.map{ $0.name }, ["Alabama", "Albuquerque"])
     }
     
     @MainActor
@@ -102,8 +102,8 @@ final class CityListViewModelTests: XCTestCase {
         await sut.searchCities()
         
         // Then
-        XCTAssertFalse(sut.filteredCities.isEmpty)
-        XCTAssertEqual(sut.filteredCities.map{ $0.name }, ["Sydney", "santander"])
+        XCTAssertFalse(sut.cities.isEmpty)
+        XCTAssertEqual(sut.cities.map{ $0.name }, ["Sydney", "santander"])
     }
     
     @MainActor
@@ -120,7 +120,7 @@ final class CityListViewModelTests: XCTestCase {
         await sut.searchCities()
 
         // Then
-        XCTAssertTrue(sut.filteredCities.isEmpty)
+        XCTAssertTrue(sut.cities.isEmpty)
     }
     
     @MainActor
@@ -139,8 +139,8 @@ final class CityListViewModelTests: XCTestCase {
         await sut.searchCities()
         
         // Then
-        XCTAssertFalse(sut.filteredCities.isEmpty)
-        XCTAssertEqual(sut.filteredCities.map { "\($0.name),\($0.country)" }, ["Amsterdam,NL", "Paris,FR", "Paris,US"])
+        XCTAssertFalse(sut.cities.isEmpty)
+        XCTAssertEqual(sut.cities.map { "\($0.name),\($0.country)" }, ["Amsterdam,NL", "Paris,FR", "Paris,US"])
     }
     
     @MainActor
@@ -159,7 +159,7 @@ final class CityListViewModelTests: XCTestCase {
         await sut.toggleFavorite(for: cities[0])
         
         // Then
-        XCTAssertTrue(sut.filteredCities[0].isFavorite)
+        XCTAssertTrue(sut.cities[0].isFavorite)
     }
     
     @MainActor
@@ -197,7 +197,7 @@ final class CityListViewModelTests: XCTestCase {
         await sut.toggleFavorite(for: cities[0])
 
         // Then
-        XCTAssertFalse(sut.filteredCities[0].isFavorite)
+        XCTAssertFalse(sut.cities[0].isFavorite)
     }
     
     @MainActor
@@ -234,8 +234,8 @@ final class CityListViewModelTests: XCTestCase {
         await sut.fetchCities()
         await sut.applyFilter()
         
-        XCTAssertFalse(sut.filteredCities.isEmpty)
-        XCTAssertEqual(sut.filteredCities.count, cities.count)
+        XCTAssertFalse(sut.cities.isEmpty)
+        XCTAssertEqual(sut.cities.count, cities.count)
     }
     
     @MainActor
@@ -253,7 +253,7 @@ final class CityListViewModelTests: XCTestCase {
         await sut.fetchCities()
         await sut.applyFilter()
         
-        XCTAssertFalse(sut.filteredCities.isEmpty)
-        XCTAssertEqual(sut.filteredCities.count, 1)
+        XCTAssertFalse(sut.cities.isEmpty)
+        XCTAssertEqual(sut.cities.count, 1)
     }
 }

@@ -8,18 +8,12 @@
 import SwiftUI
 
 struct CityDetailView: View {
-    @Environment(\.dismiss) private var dismiss
+    @Binding var isPresented: Bool
     
     let city: CityRenderModel
 
     var body: some View {
-        if #available(iOS 16.0, *) {
-            contentView
-                .presentationDetents([.height(250)])
-                .presentationDragIndicator(.visible)
-        } else {
-            contentView
-        }
+        contentView
     }
 }
 
@@ -60,7 +54,9 @@ private extension CityDetailView {
         HStack {
             Spacer()
             Button {
-                dismiss()
+                withAnimation {
+                    isPresented.toggle()
+                }
             } label: {
                 Label("Open map", systemImage: "map")
                     .padding(.horizontal)
@@ -72,5 +68,5 @@ private extension CityDetailView {
 }
 
 #Preview {
-    CityDetailView(city: .dummy)
+    CityDetailView(isPresented: .constant(true), city: .dummy)
 }

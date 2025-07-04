@@ -30,6 +30,11 @@ struct CitiesMainView: View {
                     }
                 }
                 .navigationTitle("cities_title")
+                .searchable(
+                    text: $viewModel.searchText,
+                    placement: .navigationBarDrawer(displayMode: .always),
+                    prompt: "search_city_prompt"
+                )
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Menu {
@@ -37,7 +42,11 @@ struct CitiesMainView: View {
                                 Button {
                                     viewModel.filter = option
                                 } label: {
-                                    Label(option.localizedValue, systemImage: viewModel.filter == option ? "checkmark" : "")
+                                    if viewModel.filter == option {
+                                        Label(option.localizedValue, systemImage: "checkmark")
+                                    } else {
+                                        Text(option.localizedValue)
+                                    }
                                 }
                             }
                         } label: {

@@ -27,7 +27,7 @@ struct CityMapView: View {
             userLayerView
             if let selectedCity {
                 FloatingOverlay(isPresented: showDetails) {
-                    CityDetailView(city: selectedCity)
+                    CityDetailView(isPresented: $showDetails, city: selectedCity)
                 }
             }
         }
@@ -74,7 +74,7 @@ private extension CityMapView {
                 Spacer()
                 locationButton
             }
-        }
+        }.padding()
     }
     
     @ViewBuilder
