@@ -68,13 +68,20 @@ final class CityListViewModel: ObservableObject {
         let source = filter == .all ? citiesRepository : filteredCities
         let chunkSize = 2000
 
+        guard !searchTerm.isEmpty else {
+            cities = source
+            return
+        }
+        
         let result = await withTaskGroup(of: (index: Int, result: [CityRenderModel]).self) { group in
             for (i, chunk) in source.chunked(into: chunkSize).enumerated() {
-                group.addTask {
-                    let filtered = searchTerm.isEmpty
-                        ? chunk
-                        : chunk.filter { $0.name.lowercased().hasPrefix(searchTerm) }
-                    return (index: i, result: filtered)
+                if let firstCity = chunk.first, firstCity.name.lowercased().prefix(1) <= searchTerm.prefix(1) {
+                    group.addTask {
+                        let filtered = searchTerm.isEmpty
+                            ? chunk
+                            : chunk.filter { $0.name.lowercased().hasPrefix(searchTerm) }
+                        return (index: i, result: filtered)
+                    }
                 }
             }
 
@@ -91,6 +98,7 @@ final class CityListViewModel: ObservableObject {
 
         cities = result
     }
+
     
     @MainActor
     func applyFilter() async {
