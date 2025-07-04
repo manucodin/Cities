@@ -18,6 +18,8 @@ final class CityListViewModel: ObservableObject {
     @Published var showEmptyState: Bool = false
     
     private var citiesRepository: [CityRenderModel] = []
+    private var filteredCities: [CityRenderModel] = []
+    
     private var cancellables = Set<AnyCancellable>()
     
     private let getCitiesUseCase: GetCitiesUseCaseContract
@@ -38,6 +40,9 @@ final class CityListViewModel: ObservableObject {
         $cities.dropFirst().drop(untilOutputFrom: $isLoading).sink { [weak self] cities in
             self?.showEmptyState = cities.isEmpty
         }.store(in: &cancellables)
+        
+        
+        let test = Set<Int>()
     }
     
     @MainActor
@@ -51,6 +56,7 @@ final class CityListViewModel: ObservableObject {
             let result = try await getCitiesUseCase.getCities()
             cities = result
             citiesRepository = result
+            filteredCities = result
         } catch (let error){
             errorMessage = "Error al cargar ciudades: \(error.localizedDescription)"
         }
@@ -59,7 +65,7 @@ final class CityListViewModel: ObservableObject {
     @MainActor
     func searchCities() async {
         let searchTerm = searchText.lowercased()
-        let source = citiesRepository
+        let source = filter == .all ? citiesRepository : filteredCities
         let chunkSize = 2000
 
         let result = await withTaskGroup(of: (index: Int, result: [CityRenderModel]).self) { group in
@@ -151,5 +157,6 @@ final class CityListViewModel: ObservableObject {
         }
 
         cities = result
+        filteredCities = result
     }
 }
