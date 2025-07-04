@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CityDetailView: View {
-    @Environment(\.dismiss) private var dismiss
+    @Binding var isPresented: Bool
     
     let city: CityRenderModel
 
@@ -54,7 +54,9 @@ private extension CityDetailView {
         HStack {
             Spacer()
             Button {
-                dismiss()
+                withAnimation {
+                    isPresented.toggle()
+                }
             } label: {
                 Label("Open map", systemImage: "map")
                     .padding(.horizontal)
@@ -66,5 +68,5 @@ private extension CityDetailView {
 }
 
 #Preview {
-    CityDetailView(city: .dummy)
+    CityDetailView(isPresented: .constant(true), city: .dummy)
 }
