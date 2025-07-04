@@ -52,7 +52,7 @@ private extension CityListView {
     
     @ViewBuilder
     var list: some View {
-        List(viewModel.filteredCities, id: \.id) { city in
+        List(viewModel.cities, id: \.id) { city in
             cityRow(city)
         }
         .listStyle(.plain)
