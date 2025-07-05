@@ -13,7 +13,7 @@ final class WeatherDataSource: WeatherDataSourceContract {
         self.weatherService = weatherService
     }
     
-    func fetchWeather(latitude: Double, longitude: Double) async throws -> Weather {
+    func fetchWeather(latitude: Double, longitude: Double) async throws -> Weather? {
         let params: [String: String] = [
             "lat": "\(latitude)",
             "lon": "\(longitude)",

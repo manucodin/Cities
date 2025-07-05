@@ -6,5 +6,5 @@
 //
 
 public protocol WeatherDataSourceContract {
-    func fetchWeather(latitude: Double, longitude: Double) async throws -> Weather
+    func fetchWeather(latitude: Double, longitude: Double) async throws -> Weather?
 }

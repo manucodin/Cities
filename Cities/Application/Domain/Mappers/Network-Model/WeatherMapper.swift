@@ -6,15 +6,19 @@
 //
 
 public class WeatherMapper {
-    public func map(_ dto: WeatherDTO) -> Weather {
+    public func map(_ dto: WeatherDTO) -> Weather? {
+        guard let tempMin = dto.main?.tempMin else { return nil }
+        guard let tempMax = dto.main?.tempMax else { return nil }
+        guard let icon = dto.weather?.first?.icon else { return nil }
+        
         return Weather(
             temp: dto.main?.temp ?? .zero,
             feelsLike: dto.main?.feelsLike ?? .zero,
-            tempMin: dto.main?.tempMin ?? .zero,
-            tempMax: dto.main?.tempMax ?? .zero,
+            tempMin: tempMin,
+            tempMax: tempMax,
             pressure: dto.main?.pressure ?? .zero,
             humidity: dto.main?.humidity ?? .zero,
-            icon: dto.weather?.first?.icon ?? ""
+            icon: icon
         )
     }
 }

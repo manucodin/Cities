@@ -13,8 +13,8 @@ public struct CityDetailRenderModel: Sendable {
     public let country: String
     public let coordinates: CLLocationCoordinate2D
     public let isFavorite: Bool
-    public let tempMin: Double
-    public let tempMax: Double
+    public let tempMin: Double?
+    public let tempMax: Double?
     
     public var countryFlag: String {
         country
@@ -25,9 +25,9 @@ public struct CityDetailRenderModel: Sendable {
             .joined()
     }
     
-    private let weatherIcon: String
+    private let weatherIcon: String?
     
-    init(id: Int, name: String, country: String, coordinates: CLLocationCoordinate2D, isFavorite: Bool, tempMin: Double, tempMax: Double, weatherIcon: String) {
+    init(id: Int, name: String, country: String, coordinates: CLLocationCoordinate2D, isFavorite: Bool, tempMin: Double?, tempMax: Double?, weatherIcon: String?) {
         self.id = id
         self.name = name
         self.country = country
@@ -39,6 +39,8 @@ public struct CityDetailRenderModel: Sendable {
     }
     
     public var weatherIconURL: URL? {
+        guard let weatherIcon else { return nil }
+        
         return URL(string: "https://openweathermap.org/img/wn/\(weatherIcon)@2x.png")
     }
 }

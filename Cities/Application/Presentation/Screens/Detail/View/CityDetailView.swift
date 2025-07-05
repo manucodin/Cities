@@ -55,7 +55,7 @@ private extension CityDetailView {
         HStack {
             title
             Spacer()
-            weatherInfo
+            weatherView
         }
     }
     
@@ -72,12 +72,28 @@ private extension CityDetailView {
     }
     
     @ViewBuilder
+    var weatherView: some View {
+        HStack {
+            weatherInfo
+            weatherIcon
+        }
+    }
+    
+    @ViewBuilder
     var weatherInfo: some View {
-        if let selectedCity = viewModel.cityDetail {
-            Text(String(format: "%.2f / %.2f °C", selectedCity.tempMin, selectedCity.tempMax))
+        if let tempMin = viewModel.cityDetail?.tempMin, let tempMax = viewModel.cityDetail?.tempMax {
+            Text(String(format: "%.2f / %.2f °C", tempMin, tempMax))
                 .font(.footnote)
                 .foregroundStyle(.secondary)
-            AsyncImage(url: selectedCity.weatherIconURL) { imagePhase in
+        } else {
+            EmptyView()
+        }
+    }
+    
+    @ViewBuilder
+    var weatherIcon: some View {
+        if let weatherIconURL = viewModel.cityDetail?.weatherIconURL {
+            AsyncImage(url: weatherIconURL) { imagePhase in
                 switch imagePhase {
                 case .empty:
                     ProgressView()
