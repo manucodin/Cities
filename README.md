@@ -19,7 +19,7 @@ This repository contains Ualá iOS Mobile Challange. The goal of this assignment
 ## ⚙️ Installation
 1. Clone this repository:
    ```bash
-   git clone <REPOSITORY_URL>
+   git clone https://github.com/manucodin/Cities.git
    ```
 2. Open the project in Xcode:
    ```bash
