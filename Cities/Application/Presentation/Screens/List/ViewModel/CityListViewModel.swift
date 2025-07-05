@@ -40,9 +40,6 @@ final class CityListViewModel: ObservableObject {
         $cities.dropFirst().drop(untilOutputFrom: $isLoading).sink { [weak self] cities in
             self?.showEmptyState = cities.isEmpty
         }.store(in: &cancellables)
-        
-        
-        let test = Set<Int>()
     }
     
     @MainActor
@@ -58,7 +55,7 @@ final class CityListViewModel: ObservableObject {
             citiesRepository = result
             filteredCities = result
         } catch (let error){
-            errorMessage = "Error al cargar ciudades: \(error.localizedDescription)"
+            handleError(error)
         }
     }
     
@@ -120,7 +117,7 @@ final class CityListViewModel: ObservableObject {
                 citiesRepository[repositoryIndex].isFavorite.toggle()
             }
         } catch (let error) {
-            errorMessage = "Error al actualizar la ciudad favorita: \(error.localizedDescription)"
+            handleError(error)
         }
     }
     

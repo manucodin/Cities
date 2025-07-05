@@ -8,5 +8,5 @@
 import Foundation
 
 protocol HTTPClientContract {
-    func get(from endpoint: APIRoute) async throws -> Data
+    func get(from endpoint: APIRouteContract, parameters: [String: String]?) async throws -> Data
 }

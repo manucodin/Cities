@@ -9,8 +9,21 @@ import SwiftUI
 
 struct CityListView: View {
     @ObservedObject var viewModel: CityListViewModel
-
+    
     var body: some View {
+        contentView
+            .onChange(of: viewModel.searchText) {
+                Task { await viewModel.searchCities() }
+            }
+            .onChange(of: viewModel.filter) {
+                Task { await viewModel.applyFilter() }
+            }
+    }
+}
+
+private extension CityListView {
+    @ViewBuilder
+    var contentView: some View {
         Group {
             if viewModel.isLoading {
                 loading
@@ -22,16 +35,8 @@ struct CityListView: View {
                 list
             }
         }
-        .onChange(of: viewModel.searchText) {
-            Task { await viewModel.searchCities() }
-        }
-        .onChange(of: viewModel.filter) {
-            Task { await viewModel.applyFilter() }
-        }
     }
-}
-
-private extension CityListView {
+    
     @ViewBuilder
     var loading: some View {
         ProgressView("progress_loading")

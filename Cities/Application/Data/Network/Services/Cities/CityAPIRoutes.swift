@@ -1,5 +1,5 @@
 //
-//  APIRoute.swift
+//  CityAPIRoutes.swift
 //  Cities
 //
 //  Created by Manuel Rodríguez Sebastián on 1/7/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum APIRoute: String {
+enum CityAPIRoutes: String, APIRouteContract {
     case cities
 
     var baseURL: String {

@@ -6,10 +6,10 @@
 //
 
 final class CityDataSource: CityDataSourceContract {
-    private let cityService: CityServiceProtocol
+    private let cityService: CityServiceContract
     private let mapper = CityMapper()
     
-    init(cityService: CityServiceProtocol = CityService()) {
+    init(cityService: CityServiceContract = CityService()) {
         self.cityService = cityService
     }
     
