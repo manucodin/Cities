@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class WeatherService: WeatherServiceContract {
+final class WeatherService: WeatherServiceContract {
     private let httpClient: HTTPClientContract
     
     init(httpClient: HTTPClientContract = URLSessionClient()) {

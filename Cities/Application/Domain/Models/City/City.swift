@@ -7,9 +7,9 @@
 
 import CoreLocation
 
-public struct City: Identifiable, Sendable {
-    public let id: Int
-    public let name: String
-    public let country: String
-    public let coordinates: CLLocationCoordinate2D
+struct City: Identifiable, Sendable {
+    let id: Int
+    let name: String
+    let country: String
+    let coordinates: CLLocationCoordinate2D
 }

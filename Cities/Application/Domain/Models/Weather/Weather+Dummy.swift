@@ -5,7 +5,7 @@
 //  Created by Manuel Rodríguez Sebastián on 5/7/25.
 //
 
-public extension Weather {
+extension Weather {
     static let dummy: Weather = .init(
         temp: 25.12,
         feelsLike: 25.1,

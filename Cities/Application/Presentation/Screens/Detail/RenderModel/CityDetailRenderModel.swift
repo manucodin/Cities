@@ -7,22 +7,28 @@
 
 import CoreLocation
 
-public struct CityDetailRenderModel: Sendable {
-    public let id: Int
-    public let name: String
-    public let country: String
-    public let coordinates: CLLocationCoordinate2D
-    public let isFavorite: Bool
-    public let tempMin: Double?
-    public let tempMax: Double?
+struct CityDetailRenderModel: Sendable {
+    let id: Int
+    let name: String
+    let country: String
+    let coordinates: CLLocationCoordinate2D
+    let isFavorite: Bool
+    let tempMin: Double?
+    let tempMax: Double?
     
-    public var countryFlag: String {
+    var countryFlag: String {
         country
             .uppercased()
             .unicodeScalars
             .compactMap { UnicodeScalar(127397 + $0.value) }
             .map { String($0) }
             .joined()
+    }
+    
+    var weatherIconURL: URL? {
+        guard let weatherIcon else { return nil }
+        
+        return URL(string: "https://openweathermap.org/img/wn/\(weatherIcon)@2x.png")
     }
     
     private let weatherIcon: String?
@@ -36,11 +42,5 @@ public struct CityDetailRenderModel: Sendable {
         self.tempMin = tempMin
         self.tempMax = tempMax
         self.weatherIcon = weatherIcon
-    }
-    
-    public var weatherIconURL: URL? {
-        guard let weatherIcon else { return nil }
-        
-        return URL(string: "https://openweathermap.org/img/wn/\(weatherIcon)@2x.png")
     }
 }

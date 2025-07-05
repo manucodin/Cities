@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class CityService: CityServiceContract {
+final class CityService: CityServiceContract {
     private let httpClient: HTTPClientContract
     
     init(httpClient: HTTPClientContract = URLSessionClient()) {

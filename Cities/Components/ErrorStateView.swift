@@ -15,6 +15,13 @@ struct ErrorStateView: View {
     let retryAction: (() -> Void)?
 
     var body: some View {
+        contentView
+    }
+}
+
+private extension ErrorStateView {
+    @ViewBuilder
+    var contentView: some View {
         VStack(spacing: 16) {
             imageView
             titleView
@@ -23,9 +30,7 @@ struct ErrorStateView: View {
         }
         .padding()
     }
-}
-
-private extension ErrorStateView {
+    
     @ViewBuilder
     var imageView: some View {
         if let imageName {

@@ -8,7 +8,6 @@
 import Foundation
 
 final class URLSessionClient: HTTPClientContract {
-    
     func get(from endpoint: APIRouteContract, parameters: [String: String]? = nil) async throws -> Data {
         var urlString = endpoint.path
         
@@ -29,5 +28,4 @@ final class URLSessionClient: HTTPClientContract {
             throw NetworkError.networkError
         }
     }
-
 }
