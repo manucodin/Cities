@@ -37,9 +37,9 @@ final class CityListViewModelTests: XCTestCase {
     func testFetchCities() async throws {
         // Given
         let cities: [CityRenderModel] = [
-            .makeDummy(country: "AU", name: "Sydney", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
-            .makeDummy(country: "US", name: "Denver", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
-            .makeDummy(country: "US", name: "Albuquerque", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
+            .makeDummy(id: 3, name: "Sydney", country: "AU", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
+            .makeDummy(id: 1, name: "Denver", country: "US", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
+            .makeDummy(id: 1, name: "Albuquerque", country: "US", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
         getCitiesUseCaseMock.result = .success(cities)
         
@@ -70,10 +70,10 @@ final class CityListViewModelTests: XCTestCase {
     func testFilterWithPrefixExpectedCities() async throws {
         // Given
         let cities: [CityRenderModel] = [
-            .makeDummy(country: "US", name: "Alabama", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
-            .makeDummy(country: "US", name: "Albuquerque", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
-            .makeDummy(country: "AU", name: "Sydney", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
-            .makeDummy(country: "US", name: "Arizona", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
+            .makeDummy(id: 1, name: "Alabama", country: "US", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
+            .makeDummy(id: 2, name: "Albuquerque", country: "US", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
+            .makeDummy(id: 3, name: "Sydney", country: "AU", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
+            .makeDummy(id: 4, name: "Arizona", country: "US", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
         getCitiesUseCaseMock.result = .success(cities)
         sut.searchText = "Al"
@@ -91,8 +91,8 @@ final class CityListViewModelTests: XCTestCase {
     func testFilterIsCaseInsensitive() async throws {
         // Given
         let cities: [CityRenderModel] = [
-            .makeDummy(country: "AU", name: "Sydney", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
-            .makeDummy(country: "ES", name: "santander", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
+            .makeDummy(id: 1, name: "Sydney", country: "AU", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
+            .makeDummy(id: 2, name: "santander", country: "ES", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
         getCitiesUseCaseMock.result = .success(cities)
         sut.searchText = "S"
@@ -110,7 +110,7 @@ final class CityListViewModelTests: XCTestCase {
     func testFilterWithNoMatchesReturnsEmptyArray() async throws {
         // Given
         let cities: [CityRenderModel] = [
-            .makeDummy(country: "ES", name: "Madrid", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
+            .makeDummy(id: 1, name: "Madrid", country: "ES", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
         getCitiesUseCaseMock.result = .success(cities)
         sut.searchText = "X"
@@ -127,9 +127,9 @@ final class CityListViewModelTests: XCTestCase {
     func testFilterSortOrderCityThenCountry() async throws {
         // Given
         let cities: [CityRenderModel] = [
-            .makeDummy(country: "NL", name: "Amsterdam", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
-            .makeDummy(country: "FR", name: "Paris", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
-            .makeDummy(country: "US", name: "Paris", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
+            .makeDummy(id: 1, name: "Amsterdam", country: "NL", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
+            .makeDummy(id: 2, name: "Paris", country: "FR", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
+            .makeDummy( id: 3, name: "Paris", country: "US", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
         getCitiesUseCaseMock.result = .success(cities)
         sut.searchText = ""
@@ -147,9 +147,9 @@ final class CityListViewModelTests: XCTestCase {
     func testAddFavorite() async throws {
         // Given
         let cities: [CityRenderModel] = [
-            .makeDummy(country: "NL", name: "Amsterdam", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
-            .makeDummy(country: "FR", name: "Paris", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
-            .makeDummy(country: "US", name: "Paris", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
+            .makeDummy(id: 1, name: "Amsterdam",country: "NL", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
+            .makeDummy(id: 2, name: "Paris", country: "FR", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
+            .makeDummy(id: 3, name: "Paris", country: "US" , coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
         getCitiesUseCaseMock.result = .success(cities)
         saveFavoriteCityUseCaseMock.result = .success(())
@@ -166,9 +166,9 @@ final class CityListViewModelTests: XCTestCase {
     func testAddFavoriteError() async throws {
         // Given
         let cities: [CityRenderModel] = [
-            .makeDummy(country: "NL", name: "Amsterdam", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
-            .makeDummy(country: "FR", name: "Paris", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
-            .makeDummy(country: "US", name: "Paris", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
+            .makeDummy(id: 1, name: "Amsterdam", country: "NL", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
+            .makeDummy(id: 2, name: "Paris", country: "FR", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
+            .makeDummy( id: 3, name: "Paris", country: "US", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
         getCitiesUseCaseMock.result = .success(cities)
         saveFavoriteCityUseCaseMock.result = .failure(NSError(domain: "", code: 0))
@@ -185,9 +185,9 @@ final class CityListViewModelTests: XCTestCase {
     func testDeleteFavorite() async throws {
         // Given
         let cities: [CityRenderModel] = [
-            .makeDummy(country: "NL", name: "Amsterdam", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: true),
-            .makeDummy(country: "FR", name: "Paris", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
-            .makeDummy(country: "US", name: "Paris", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
+            .makeDummy(id: 1, name: "Amsterdam", country: "NL", coordinates: .init(latitude: 0, longitude: 0), isFavorite: true),
+            .makeDummy(id: 2, name: "Paris", country: "FR", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
+            .makeDummy(id: 3, name: "Paris", country: "US", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
         getCitiesUseCaseMock.result = .success(cities)
         deleteFavoriteCityUseCaseMock.result = .success(())
@@ -204,9 +204,9 @@ final class CityListViewModelTests: XCTestCase {
     func testDeleteFavoriteError() async throws {
         // Given
         let cities: [CityRenderModel] = [
-            .makeDummy(country: "NL", name: "Amsterdam", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: true),
-            .makeDummy(country: "FR", name: "Paris", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
-            .makeDummy(country: "US", name: "Paris", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
+            .makeDummy(id: 1, name: "Amsterdam", country: "NL", coordinates: .init(latitude: 0, longitude: 0), isFavorite: true),
+            .makeDummy(id: 2, name: "Paris", country: "FR", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
+            .makeDummy(id: 3, name: "Paris", country: "US", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
         getCitiesUseCaseMock.result = .success(cities)
         deleteFavoriteCityUseCaseMock.result = .failure(NSError(domain: "", code: 0))
@@ -223,9 +223,9 @@ final class CityListViewModelTests: XCTestCase {
     func testApplyFilterAll() async throws {
         // Given
         let cities: [CityRenderModel] = [
-            .makeDummy(country: "NL", name: "Amsterdam", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: true),
-            .makeDummy(country: "FR", name: "Paris", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
-            .makeDummy(country: "US", name: "Paris", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
+            .makeDummy(id: 1, name: "Amsterdam", country: "NL", coordinates: .init(latitude: 0, longitude: 0), isFavorite: true),
+            .makeDummy(id: 2, name: "Paris", country: "FR", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
+            .makeDummy(id: 3 , name: "Paris", country: "US", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
         getCitiesUseCaseMock.result = .success(cities)
         sut.filter = .all
@@ -242,9 +242,9 @@ final class CityListViewModelTests: XCTestCase {
     func testApplyFilterFavorites() async throws {
         // Given
         let cities: [CityRenderModel] = [
-            .makeDummy(country: "NL", name: "Amsterdam", id: 1, coordinates: .init(latitude: 0, longitude: 0), isFavorite: true),
-            .makeDummy(country: "FR", name: "Paris", id: 2, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
-            .makeDummy(country: "US", name: "Paris", id: 3, coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
+            .makeDummy(id: 1, name: "Amsterdam", country: "NL", coordinates: .init(latitude: 0, longitude: 0), isFavorite: true),
+            .makeDummy(id: 2, name: "Paris", country: "FR", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false),
+            .makeDummy(id: 3, name: "Paris", country: "US", coordinates: .init(latitude: 0, longitude: 0), isFavorite: false)
         ]
         getCitiesUseCaseMock.result = .success(cities)
         sut.filter = .favorites
