@@ -11,7 +11,7 @@ struct RoundButtonModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding()
-            .background(Color.white.opacity(0.9))
+            .background(Color.backgroundPrimary.opacity(0.9))
             .clipShape(Circle())
             .shadow(radius: 4)
     }
