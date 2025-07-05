@@ -16,7 +16,7 @@ final class HTTPClientMock: HTTPClientContract {
         self.result = result
     }
     
-    func get(from endpoint: APIRoute) async throws -> Data {
+    func get(from endpoint: any Cities.APIRouteContract, parameters: [String : String]?) async throws -> Data {
         switch result {
         case .success(let data): return data
         case .failure(let error): throw error
