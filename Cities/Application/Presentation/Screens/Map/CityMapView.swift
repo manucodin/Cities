@@ -27,7 +27,7 @@ struct CityMapView: View {
             userLayerView
             if let selectedCity {
                 FloatingOverlay(isPresented: showDetails) {
-                    CityDetailView(isPresented: $showDetails, city: selectedCity)
+                    CityDetailView(isPresented: $showDetails, selectedCity: selectedCity)
                 }
             }
         }

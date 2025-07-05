@@ -9,7 +9,7 @@
 
 import Foundation
 
-public final class CityServiceMock: CityServiceProtocol {
+public final class CityServiceMock: CityServiceContract {
     public var result: Result<[CityDTO], Error>?
 
     public func fetchCities() async throws -> [CityDTO] {

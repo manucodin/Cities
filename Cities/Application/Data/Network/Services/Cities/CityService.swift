@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class CityService: CityServiceProtocol {
+public final class CityService: CityServiceContract {
     private let httpClient: HTTPClientContract
     
     init(httpClient: HTTPClientContract = URLSessionClient()) {
@@ -15,7 +15,7 @@ public final class CityService: CityServiceProtocol {
     }
     
     public func fetchCities() async throws -> [CityDTO] {
-        let data = try await httpClient.get(from: .cities)
+        let data = try await httpClient.get(from: CityAPIRoutes.cities, parameters: nil)
         do {
             return try JSONDecoder().decode([CityDTO].self, from: data)
         } catch {

@@ -7,11 +7,11 @@
 
 @testable import Cities
 
-import CoreLocation
 import Foundation
+import CoreLocation
 
 extension CityRenderModel {
-    static func makeDummy(country: String, name: String, id: Int, coordinates: CLLocationCoordinate2D, isFavorite: Bool) -> CityRenderModel {
+    static func makeDummy(id: Int, name: String, country: String, coordinates: CLLocationCoordinate2D, isFavorite: Bool) -> CityRenderModel {
         return .init(id: id, name: name, country: country, coordinates: coordinates, isFavorite: isFavorite)
     }
 }
