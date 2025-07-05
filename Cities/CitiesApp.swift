@@ -13,7 +13,7 @@ struct CitiesApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CitiesMainView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
