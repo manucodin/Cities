@@ -35,7 +35,9 @@ final class CityDetailViewModel: ObservableObject {
             handleError(error)
         }
     }
-    
+}
+
+private extension CityDetailViewModel {
     private func handleError(_ error: Error) {
         if let error = error as? NetworkError {
             errorMessage = error.localizedError

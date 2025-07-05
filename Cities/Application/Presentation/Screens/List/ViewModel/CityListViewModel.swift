@@ -36,12 +36,6 @@ final class CityListViewModel: ObservableObject {
         setupObservables()
     }
     
-    func setupObservables() {
-        $cities.dropFirst().drop(untilOutputFrom: $isLoading).sink { [weak self] cities in
-            self?.showEmptyState = cities.isEmpty
-        }.store(in: &cancellables)
-    }
-    
     @MainActor
     func fetchCities() async {
         defer {
@@ -127,6 +121,14 @@ final class CityListViewModel: ObservableObject {
         } catch (let error) {
             handleError(error)
         }
+    }
+}
+
+private extension CityListViewModel {
+    private func setupObservables() {
+        $cities.dropFirst().drop(untilOutputFrom: $isLoading).sink { [weak self] cities in
+            self?.showEmptyState = cities.isEmpty
+        }.store(in: &cancellables)
     }
     
     private func handleError(_ error: Error) {

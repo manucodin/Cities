@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct DetectOrientation: ViewModifier {
-    
     @Binding var orientation: UIDeviceOrientation
     
     func body(content: Content) -> some View {

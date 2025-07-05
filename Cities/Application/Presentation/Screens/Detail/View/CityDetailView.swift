@@ -19,6 +19,7 @@ struct CityDetailView: View {
     
     var body: some View {
         contentView
+            .padding()
             .task {
                 Task { await viewModel.fetchWeather() }
             }
@@ -34,7 +35,7 @@ private extension CityDetailView {
             } else {
                 detailView
             }
-        }.padding()
+        }
     }
     
     @ViewBuilder

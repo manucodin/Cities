@@ -22,6 +22,13 @@ struct CityMapView: View {
     }
     
     var body: some View {
+        contentView
+    }
+}
+
+private extension CityMapView {
+    @ViewBuilder
+    var contentView: some View {
         ZStack {
             mapView
             userLayerView
@@ -42,9 +49,7 @@ struct CityMapView: View {
             }
         })
     }
-}
-
-private extension CityMapView {
+    
     @ViewBuilder
     var mapView: some View {
         Map(position: $cameraPosition) {

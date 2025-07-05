@@ -7,14 +7,14 @@
 
 import CoreLocation
 
-public struct CityRenderModel: Identifiable, Equatable, Hashable, Sendable {
-    public let id: Int
-    public let name: String
-    public let country: String
-    public let coordinates: CLLocationCoordinate2D
-    public var isFavorite: Bool
+struct CityRenderModel: Identifiable, Equatable, Hashable, Sendable {
+    let id: Int
+    let name: String
+    let country: String
+    let coordinates: CLLocationCoordinate2D
+    var isFavorite: Bool
     
-    public var countryFlag: String {
+    var countryFlag: String {
         country
             .uppercased()
             .unicodeScalars
@@ -23,11 +23,11 @@ public struct CityRenderModel: Identifiable, Equatable, Hashable, Sendable {
             .joined()
     }
     
-    public static func == (lhs: CityRenderModel, rhs: CityRenderModel) -> Bool {
+    static func == (lhs: CityRenderModel, rhs: CityRenderModel) -> Bool {
         lhs.id == rhs.id
     }
     
-    public func hash(into hasher: inout Hasher) {
+    func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
 }

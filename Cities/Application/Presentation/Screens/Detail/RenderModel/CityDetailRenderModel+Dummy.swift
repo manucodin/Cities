@@ -5,7 +5,7 @@
 //  Created by Manuel Rodríguez Sebastián on 5/7/25.
 //
 
-public extension CityDetailRenderModel {
+extension CityDetailRenderModel {
     static let dummy: CityDetailRenderModel = .init(
         id: 1,
         name: "Gijón",

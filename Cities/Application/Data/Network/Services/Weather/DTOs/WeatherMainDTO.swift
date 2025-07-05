@@ -5,7 +5,7 @@
 //  Created by Manuel Rodríguez Sebastián on 4/7/25.
 //
 
-public struct WeatherMainDTO: Codable, Sendable {
+struct WeatherMainDTO: Codable, Sendable {
     let temp: Double?
     let feelsLike: Double?
     let tempMin: Double?

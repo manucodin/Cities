@@ -19,6 +19,13 @@ struct EmptyStateView: View {
     }
     
     var body: some View {
+        contentView
+    }
+}
+
+private extension EmptyStateView {
+    @ViewBuilder
+    var contentView: some View {
         VStack(spacing: 16) {
             imageView
             titleView
@@ -26,9 +33,7 @@ struct EmptyStateView: View {
         }
         .padding()
     }
-}
-
-private extension EmptyStateView {
+    
     @ViewBuilder
     var imageView: some View {
         if let imageName {
